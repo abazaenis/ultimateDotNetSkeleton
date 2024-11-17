@@ -1,8 +1,6 @@
 ﻿namespace UltimateDotNetSkeleton.Controllers
 {
-	using Microsoft.AspNetCore.Http;
 	using Microsoft.AspNetCore.Mvc;
-
 	using UltimateDotNetSkeleton.Services.Contracts;
 
 	[Route("api/[controller]")]
@@ -16,19 +14,20 @@
 			_service = service;
 		}
 
-		[HttpGet]
+		[HttpGet("GetCompany")]
+		public IActionResult GetCompany(Guid id)
+		{
+			var company = _service.CompanyService.GetCompany(id, trackChanges: false);
+
+			return Ok(company);
+		}
+
+		[HttpGet("GetCompanies")]
 		public IActionResult GetCompanies()
 		{
-			try
-			{
-				var companies = _service.CompanyService.GetAllCompanies(trackChanges: false);
+			var companies = _service.CompanyService.GetAllCompanies(trackChanges: false);
 
-				return Ok(companies);
-			}
-			catch (Exception ex)
-			{
-				return StatusCode(500, ex.Message);
-			}
+			return Ok(companies);
 		}
 	}
 }

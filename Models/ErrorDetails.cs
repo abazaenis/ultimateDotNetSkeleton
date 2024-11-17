@@ -2,7 +2,7 @@
 {
 	using System.Text.Json;
 
-	public class ErrorModel
+	public class ErrorDetails
 	{
         public int StatusCode { get; set; }
 

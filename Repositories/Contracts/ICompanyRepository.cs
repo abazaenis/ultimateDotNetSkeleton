@@ -4,6 +4,8 @@
 
 	public interface ICompanyRepository
     {
-        IEnumerable<Company> GetAllCompanies(bool trackChanges);
+		Company? GetCompany(Guid companyId, bool trackChanges);
+
+		IEnumerable<Company> GetAllCompanies(bool trackChanges);
     }
 }

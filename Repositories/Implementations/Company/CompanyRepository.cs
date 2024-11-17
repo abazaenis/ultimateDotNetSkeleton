@@ -14,6 +14,11 @@
 		{
 		}
 
+		public Company? GetCompany(Guid companyId, bool trackChanges)
+		{
+			return FindByCondition(company => company.Id.Equals(companyId), trackChanges).SingleOrDefault();
+		}
+
 		public IEnumerable<Company> GetAllCompanies(bool trackChanges)
 		{
 			return FindAll(trackChanges).OrderBy(company => company.Name).ToList();

@@ -3,8 +3,9 @@ namespace UltimateDotNetSkeleton
     using Microsoft.AspNetCore.HttpOverrides;
     using NLog;
     using UltimateDotNetSkeleton.Extensions;
+	using UltimateDotNetSkeleton.Utilities.Logger;
 
-    public class Program
+	public class Program
 	{
 		public static void Main(string[] args)
 		{
@@ -27,10 +28,12 @@ namespace UltimateDotNetSkeleton
 
 			var app = builder.Build();
 
+			var logger = app.Services.GetRequiredService<ILoggerManager>();
+			app.ConfigureExceptionHandler(logger);
+
 			// Configure middleware pipeline
 			if (app.Environment.IsDevelopment())
 			{
-				app.UseDeveloperExceptionPage();
 				app.UseSwagger();
 				app.UseSwaggerUI();
 			}
