@@ -1,4 +1,4 @@
-namespace ultimateDotNetSkeleton
+namespace UltimateDotNetSkeleton
 {
 	public class WeatherForecast
 	{

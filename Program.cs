@@ -1,17 +1,22 @@
 namespace UltimateDotNetSkeleton
 {
-	using Microsoft.AspNetCore.HttpOverrides;
-	using ultimateDotNetSkeleton.Extensions;
+    using Microsoft.AspNetCore.HttpOverrides;
+    using NLog;
+    using UltimateDotNetSkeleton.Extensions;
 
-	public class Program
+    public class Program
 	{
 		public static void Main(string[] args)
 		{
 			var builder = WebApplication.CreateBuilder(args);
 
+			// Logger configuration
+			var loggerConfigFilePath = Path.Combine(Directory.GetCurrentDirectory(), "nlog.config");
+			LogManager.Setup().LoadConfigurationFromFile(loggerConfigFilePath);
+
 			// Service configuration
 			builder.Services.ConfigureCors();
-			builder.Services.ConfigureIISIntegration();
+			builder.Services.ConfigureLoggerService();
 			builder.Services.AddControllers();
 
 			var app = builder.Build();
@@ -36,18 +41,6 @@ namespace UltimateDotNetSkeleton
 			app.UseCors("CorsPolicy");
 
 			app.UseAuthorization();
-
-			app.Use(async (context, next) =>
-			{
-				await context.Response.WriteAsync("Hello from the middleware component1\n");
-				await next();
-			});
-
-			app.Use(async (context, next) =>
-			{
-				await context.Response.WriteAsync("Hello from the middleware component2\n");
-				await next();
-			});
 
 			app.MapControllers();
 
