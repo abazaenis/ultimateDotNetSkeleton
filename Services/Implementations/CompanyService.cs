@@ -6,6 +6,7 @@
 	using AutoMapper;
 
 	using UltimateDotNetSkeleton.Dtos.Company;
+	using UltimateDotNetSkeleton.Exceptions.NotFound;
 	using UltimateDotNetSkeleton.Models;
 	using UltimateDotNetSkeleton.Repositories.Contracts;
 	using UltimateDotNetSkeleton.Services.Contracts;
@@ -37,7 +38,10 @@
 		{
 			var company = _repository.Company.GetCompany(companyId, trackChanges);
 
-			// Check if company is null
+			if (company == null)
+			{
+				throw new CompanyNotFoundException(companyId);
+			}
 
 			var companyDto = _mapper.Map<CompanyDto>(company);
 			return companyDto;
