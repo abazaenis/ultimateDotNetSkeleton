@@ -1,10 +1,9 @@
 namespace UltimateDotNetSkeleton.Controllers
 {
-	using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc;
+    using UltimateDotNetSkeleton.Logger;
 
-	using UltimateDotNetSkeleton.Contracts;
-
-	[Route("[controller]")]
+    [Route("[controller]")]
 	[ApiController]
 	public class WeatherForecastController : ControllerBase
 	{
