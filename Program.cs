@@ -21,6 +21,9 @@ namespace UltimateDotNetSkeleton
 			builder.Services.ConfigureServiceManager();
 			builder.Services.ConfigureSqlContext(builder.Configuration);
 			builder.Services.AddControllers();
+			builder.Services.AddEndpointsApiExplorer();
+			builder.Services.AddSwaggerGen();
+			builder.Services.AddAutoMapper(typeof(Program));
 
 			var app = builder.Build();
 
@@ -28,6 +31,8 @@ namespace UltimateDotNetSkeleton
 			if (app.Environment.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
+				app.UseSwagger();
+				app.UseSwaggerUI();
 			}
 			else
 			{

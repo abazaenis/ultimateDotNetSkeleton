@@ -1,10 +1,10 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-#nullable disable
+﻿#nullable disable
 
 namespace UltimateDotNetSkeleton.Migrations
 {
+    using System;
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     /// <inheritdoc />
     public partial class InitialMigration : Migration
     {
@@ -18,7 +18,7 @@ namespace UltimateDotNetSkeleton.Migrations
                     CompanyId = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: false),
                     Address = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: false),
-                    Country = table.Column<string>(type: "text", nullable: true)
+                    Country = table.Column<string>(type: "text", nullable: true),
                 },
                 constraints: table =>
                 {
@@ -33,7 +33,7 @@ namespace UltimateDotNetSkeleton.Migrations
                     Name = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
                     Age = table.Column<int>(type: "integer", nullable: false),
                     Position = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
-                    CompanyId = table.Column<Guid>(type: "uuid", nullable: false)
+                    CompanyId = table.Column<Guid>(type: "uuid", nullable: false),
                 },
                 constraints: table =>
                 {
