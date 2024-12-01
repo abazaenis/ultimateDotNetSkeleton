@@ -1,6 +1,13 @@
 ﻿namespace UltimateDotNetSkeleton.Repositories.Contracts
 {
-    public interface IEmployeeRepository
+	using UltimateDotNetSkeleton.Models;
+
+	public interface IEmployeeRepository
     {
+        IEnumerable<Employee> GetEmployees(Guid companyId, bool trackChanges);
+
+        Employee? GetEmployee(Guid companyId, Guid id, bool trackChanges);
+
+        void CreateEmployeeForCompany(Guid companyId, Employee employee);
     }
 }

@@ -1,8 +1,11 @@
 namespace UltimateDotNetSkeleton
 {
-    using Microsoft.AspNetCore.HttpOverrides;
-    using NLog;
-    using UltimateDotNetSkeleton.Extensions;
+	using Microsoft.AspNetCore.HttpOverrides;
+	using Microsoft.AspNetCore.Mvc;
+
+	using NLog;
+
+	using UltimateDotNetSkeleton.Extensions;
 	using UltimateDotNetSkeleton.Utilities.Logger;
 
 	public class Program
@@ -21,7 +24,15 @@ namespace UltimateDotNetSkeleton
 			builder.Services.ConfigureRepositoryManager();
 			builder.Services.ConfigureServiceManager();
 			builder.Services.ConfigureSqlContext(builder.Configuration);
-			builder.Services.AddControllers();
+			builder.Services.Configure<ApiBehaviorOptions>(options =>
+			{
+				options.SuppressModelStateInvalidFilter = true;
+			});
+			builder.Services.AddControllers(config =>
+			{
+				config.RespectBrowserAcceptHeader = true;
+				config.ReturnHttpNotAcceptable = true;
+			}).AddXmlDataContractSerializerFormatters();
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
 			builder.Services.AddAutoMapper(typeof(Program));

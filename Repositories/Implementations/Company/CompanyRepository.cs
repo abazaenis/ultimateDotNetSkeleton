@@ -23,5 +23,7 @@
 		{
 			return FindAll(trackChanges).OrderBy(company => company.Name).ToList();
 		}
+
+		public void CreateCompany(Company company) => Create(company);
 	}
 }
