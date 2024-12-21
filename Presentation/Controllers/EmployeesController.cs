@@ -1,9 +1,8 @@
 ﻿namespace UltimateDotNetSkeleton.Presentation.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-
-    using UltimateDotNetSkeleton.Dtos.Employee;
-    using UltimateDotNetSkeleton.Services.Manager;
+    using UltimateDotNetSkeleton.Application.DataTransferObjects.Employee;
+    using UltimateDotNetSkeleton.Application.Manager;
 
     [Route("api/companies/{companyId}/employees")]
     [ApiController]
@@ -44,5 +43,13 @@
 
             return CreatedAtRoute("GetEmployeeForCompany", new { companyId, id = employeeToReturn.Id }, employeeToReturn);
         }
-    }
+
+        [HttpDelete("{id:guid}")]
+        public IActionResult DeleteEmployeeForCompany(Guid companyId, Guid id)
+        {
+            _service.EmployeeService.DeleteEmployeeForCompany(companyId, id, trackChanges: false);
+
+            return NoContent();
+        }
+	}
 }

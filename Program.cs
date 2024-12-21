@@ -1,14 +1,13 @@
 namespace UltimateDotNetSkeleton
 {
-	using Microsoft.AspNetCore.HttpOverrides;
-	using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.HttpOverrides;
+    using Microsoft.AspNetCore.Mvc;
 
-	using NLog;
+    using NLog;
+    using UltimateDotNetSkeleton.Application.Extensions;
+    using UltimateDotNetSkeleton.Infrastructure.Logger;
 
-	using UltimateDotNetSkeleton.Extensions;
-	using UltimateDotNetSkeleton.Utilities.Logger;
-
-	public class Program
+    public class Program
 	{
 		public static void Main(string[] args)
 		{

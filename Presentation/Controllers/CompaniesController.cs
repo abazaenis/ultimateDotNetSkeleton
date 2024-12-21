@@ -1,10 +1,9 @@
 ﻿namespace UltimateDotNetSkeleton.Presentation.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-
-    using UltimateDotNetSkeleton.Dtos.Company;
+    using UltimateDotNetSkeleton.Application.DataTransferObjects.Company;
+    using UltimateDotNetSkeleton.Application.Manager;
     using UltimateDotNetSkeleton.Presentation.ModelBinders;
-    using UltimateDotNetSkeleton.Services.Manager;
 
     [Route("api/companies")]
     [ApiController]
@@ -61,5 +60,13 @@
 
             return CreatedAtRoute("CompanyCollection", new { result.Ids }, result.Companies);
         }
-    }
+
+        [HttpDelete("{id:guid}")]
+        public IActionResult DeleteCompany(Guid id)
+        {
+            _service.CompanyService.DeleteCompany(id, trackChanges: false);
+
+            return NoContent();
+        }
+	}
 }
