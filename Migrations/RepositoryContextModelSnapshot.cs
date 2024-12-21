@@ -4,7 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using UltimateDotNetSkeleton.Repository.Context;
+using UltimateDotNetSkeleton.Repositories.Context;
+
 
 #nullable disable
 

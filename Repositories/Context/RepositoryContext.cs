@@ -1,9 +1,8 @@
-﻿namespace UltimateDotNetSkeleton.Repository.Context
+﻿namespace UltimateDotNetSkeleton.Repositories.Context
 {
     using Microsoft.EntityFrameworkCore;
 
     using UltimateDotNetSkeleton.Models;
-    using UltimateDotNetSkeleton.Repository.Configuration;
 
     public class RepositoryContext : DbContext
     {
@@ -15,11 +14,5 @@
         public DbSet<Company>? Companies { get; set; }
 
         public DbSet<Employee>? Employees { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.ApplyConfiguration(new CompanyConfiguration());
-            modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
-        }
     }
 }

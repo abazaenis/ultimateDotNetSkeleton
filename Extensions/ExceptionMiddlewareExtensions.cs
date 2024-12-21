@@ -3,6 +3,7 @@
 	using System.Net;
 	using Microsoft.AspNetCore.Diagnostics;
 
+	using UltimateDotNetSkeleton.Exceptions.BadRequest;
 	using UltimateDotNetSkeleton.Exceptions.NotFound;
 	using UltimateDotNetSkeleton.Models;
 	using UltimateDotNetSkeleton.Utilities.Logger;
@@ -25,6 +26,7 @@
 						context.Response.StatusCode = contextFeature.Error switch
 						{
 							NotFoundException => StatusCodes.Status404NotFound,
+							BadRequestException => StatusCodes.Status400BadRequest,
 							_ => StatusCodes.Status500InternalServerError,
 						};
 

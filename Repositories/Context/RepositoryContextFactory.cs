@@ -1,11 +1,11 @@
-﻿namespace UltimateDotNetSkeleton.Repository.Context
+﻿namespace UltimateDotNetSkeleton.Repositories.Context
 {
     using System.IO;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Design;
     using Microsoft.Extensions.Configuration;
 
-	// Provides a design-time factory for creating the DbContext, required for EF Core tools like migrations.
+    // Provides a design-time factory for creating the DbContext, required for EF Core tools like migrations.
     public class RepositoryContextFactory : IDesignTimeDbContextFactory<RepositoryContext>
     {
         public RepositoryContext CreateDbContext(string[] args)

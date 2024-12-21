@@ -1,8 +1,8 @@
-﻿namespace UltimateDotNetSkeleton.Repositories.Contracts
+﻿namespace UltimateDotNetSkeleton.Repositories.EmployeeRepository
 {
-	using UltimateDotNetSkeleton.Models;
+    using UltimateDotNetSkeleton.Models;
 
-	public interface IEmployeeRepository
+    public interface IEmployeeRepository
     {
         IEnumerable<Employee> GetEmployees(Guid companyId, bool trackChanges);
 

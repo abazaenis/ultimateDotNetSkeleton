@@ -1,4 +1,4 @@
-﻿namespace UltimateDotNetSkeleton.Repositories.Contracts
+﻿namespace UltimateDotNetSkeleton.Repositories.Base
 {
     using System.Linq.Expressions;
 

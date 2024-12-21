@@ -1,9 +1,8 @@
-﻿namespace UltimateDotNetSkeleton.Repositories.Implementations.Base
+﻿namespace UltimateDotNetSkeleton.Repositories.Base
 {
     using System.Linq.Expressions;
     using Microsoft.EntityFrameworkCore;
-    using UltimateDotNetSkeleton.Repositories.Contracts;
-    using UltimateDotNetSkeleton.Repository.Context;
+    using UltimateDotNetSkeleton.Repositories.Context;
 
     public abstract class RepositoryBase<T> : IRepositoryBase<T>
         where T : class

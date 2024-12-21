@@ -1,11 +1,9 @@
 ﻿namespace UltimateDotNetSkeleton.Extensions
 {
     using Microsoft.EntityFrameworkCore;
-    using UltimateDotNetSkeleton.Repositories.Contracts;
-    using UltimateDotNetSkeleton.Repositories.Implementations.Manager;
-    using UltimateDotNetSkeleton.Repository.Context;
-    using UltimateDotNetSkeleton.Services.Contracts;
-    using UltimateDotNetSkeleton.Services.Implementations;
+    using UltimateDotNetSkeleton.Repositories.Context;
+    using UltimateDotNetSkeleton.Repositories.Manager;
+    using UltimateDotNetSkeleton.Services.Manager;
     using UltimateDotNetSkeleton.Utilities.Logger;
 
     public static class ServiceExtensions

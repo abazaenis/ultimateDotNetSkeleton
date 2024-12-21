@@ -4,10 +4,10 @@
 	{
         public Guid Id { get; set; }
 
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
-        public int Age { get; set; }
+        public required int Age { get; set; }
 
-        public string Position { get; set; }
+        public required string Position { get; set; }
     }
 }
