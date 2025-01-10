@@ -51,6 +51,11 @@
 				return BadRequest("CompanyForCreationDto object is null");
 			}
 
+			if (!ModelState.IsValid)
+			{
+				return UnprocessableEntity(ModelState);
+			}
+
 			var createdCompany = _service.CompanyService.CreateCompany(company, trackChanges: false);
 
 			return CreatedAtRoute("CompanyById", new { id = createdCompany.Id }, createdCompany);
@@ -73,23 +78,6 @@
 			}
 
 			_service.CompanyService.UpdateCompany(id, company, trackChanges: true);
-
-			return NoContent();
-		}
-
-		[HttpPatch("{id:guid}")]
-		public IActionResult PartiallyUpdateEmployeeForCompany(Guid companyId, Guid id, [FromBody] JsonPatchDocument<EmployeeForUpdateDto> patchDoc)
-		{
-			if (patchDoc is null)
-			{
-				return BadRequest("PatchDoc object sent from client is null.");
-			}
-
-			var result = _service.EmployeeService.GetEmployeeForPatch(companyId, id, compTrackChanges: false, empTrackChanges: true);
-
-			patchDoc.ApplyTo(result.EmployeeToPatch);
-
-			_service.EmployeeService.SaveChangesForPatch(result.EmployeeToPatch, result.EmployeeEntity);
 
 			return NoContent();
 		}

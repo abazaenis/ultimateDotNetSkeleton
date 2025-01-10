@@ -2,7 +2,7 @@
 {
 	using UltimateDotNetSkeleton.Application.DataTransferObjects.Employee;
 
-	public class CompanyForUpdateDto
+	public record CompanyForUpdateDto
 	{
         public required string Name { get; set; }
 
