@@ -14,6 +14,8 @@
 
         (IEnumerable<CompanyDto> Companies, string Ids) CreateCompanyCollection(IEnumerable<CompanyForCreationDto> companyCollection);
 
+        void UpdateCompany(Guid companyId, CompanyForUpdateDto companyForUpdate, bool trackChanges);
+
         void DeleteCompany(Guid companyId, bool trackChanges);
     }
 }

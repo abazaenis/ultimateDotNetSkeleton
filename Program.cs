@@ -1,13 +1,16 @@
 namespace UltimateDotNetSkeleton
 {
-    using Microsoft.AspNetCore.HttpOverrides;
-    using Microsoft.AspNetCore.Mvc;
+	using Microsoft.AspNetCore.HttpOverrides;
+	using Microsoft.AspNetCore.Mvc;
+	using Microsoft.AspNetCore.Mvc.Formatters;
+	using Microsoft.Extensions.Options;
 
-    using NLog;
-    using UltimateDotNetSkeleton.Application.Extensions;
-    using UltimateDotNetSkeleton.Infrastructure.Logger;
+	using NLog;
 
-    public class Program
+	using UltimateDotNetSkeleton.Application.Extensions;
+	using UltimateDotNetSkeleton.Infrastructure.Logger;
+
+	public class Program
 	{
 		public static void Main(string[] args)
 		{
@@ -16,6 +19,12 @@ namespace UltimateDotNetSkeleton
 			// Logger configuration
 			var loggerConfigFilePath = Path.Combine(Directory.GetCurrentDirectory(), "nlog.config");
 			LogManager.Setup().LoadConfigurationFromFile(loggerConfigFilePath);
+
+			NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter() =>
+				new ServiceCollection().AddLogging().AddMvc().AddNewtonsoftJson()
+				.Services.BuildServiceProvider()
+				.GetRequiredService<IOptions<MvcOptions>>()
+				.Value.InputFormatters.OfType<NewtonsoftJsonPatchInputFormatter>().First();
 
 			// Service configuration
 			builder.Services.ConfigureCors();
@@ -31,6 +40,7 @@ namespace UltimateDotNetSkeleton
 			{
 				config.RespectBrowserAcceptHeader = true;
 				config.ReturnHttpNotAcceptable = true;
+				config.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
 			}).AddXmlDataContractSerializerFormatters();
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
