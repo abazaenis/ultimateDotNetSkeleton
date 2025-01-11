@@ -1,13 +1,12 @@
 ﻿namespace UltimateDotNetSkeleton.Presentation.Controllers
 {
-	using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc;
+    using UltimateDotNetSkeleton.Application.DTOs.Company;
+    using UltimateDotNetSkeleton.Application.Services.Manager;
+    using UltimateDotNetSkeleton.Presentation.ActionFilters;
+    using UltimateDotNetSkeleton.Presentation.ModelBinders;
 
-	using UltimateDotNetSkeleton.ActionFilters;
-	using UltimateDotNetSkeleton.Application.DataTransferObjects.Company;
-	using UltimateDotNetSkeleton.Application.Services.Manager;
-	using UltimateDotNetSkeleton.Presentation.ModelBinders;
-
-	[Route("api/companies")]
+    [Route("api/companies")]
 	[ApiController]
 	public class CompaniesController : ControllerBase
 	{

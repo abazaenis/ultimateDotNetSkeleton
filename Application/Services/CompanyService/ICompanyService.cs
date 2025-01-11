@@ -1,8 +1,8 @@
 ﻿namespace UltimateDotNetSkeleton.Application.Services.CompanyService
 {
-	using UltimateDotNetSkeleton.Application.DataTransferObjects.Company;
+    using UltimateDotNetSkeleton.Application.DTOs.Company;
 
-	public interface ICompanyService
+    public interface ICompanyService
 	{
 		Task<IEnumerable<CompanyDto>> GetAllCompaniesAsync(bool trackChanges);
 

@@ -1,17 +1,16 @@
 namespace UltimateDotNetSkeleton
 {
-	using Microsoft.AspNetCore.HttpOverrides;
-	using Microsoft.AspNetCore.Mvc;
-	using Microsoft.AspNetCore.Mvc.Formatters;
-	using Microsoft.Extensions.Options;
+    using Microsoft.AspNetCore.HttpOverrides;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Formatters;
+    using Microsoft.Extensions.Options;
 
-	using NLog;
+    using NLog;
+    using UltimateDotNetSkeleton.Application.Extensions;
+    using UltimateDotNetSkeleton.Infrastructure.Logger;
+    using UltimateDotNetSkeleton.Presentation.ActionFilters;
 
-	using UltimateDotNetSkeleton.ActionFilters;
-	using UltimateDotNetSkeleton.Application.Extensions;
-	using UltimateDotNetSkeleton.Infrastructure.Logger;
-
-	public class Program
+    public class Program
 	{
 		public static void Main(string[] args)
 		{

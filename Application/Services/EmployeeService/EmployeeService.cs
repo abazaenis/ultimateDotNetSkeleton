@@ -1,17 +1,17 @@
 ﻿namespace UltimateDotNetSkeleton.Application.Services.EmployeeService
 {
-	using System;
-	using System.Collections.Generic;
+    using System;
+    using System.Collections.Generic;
 
-	using AutoMapper;
+    using AutoMapper;
+    using UltimateDotNetSkeleton.Application.DTOs.Employee;
+    using UltimateDotNetSkeleton.Application.Exceptions.NotFound;
+    using UltimateDotNetSkeleton.Domain.Models;
+    using UltimateDotNetSkeleton.Domain.Repositories.Manager;
+    using UltimateDotNetSkeleton.Infrastructure.Logger;
+	using UltimateDotNetSkeleton.Shared.RequestFeatures;
 
-	using UltimateDotNetSkeleton.Application.DataTransferObjects.Employee;
-	using UltimateDotNetSkeleton.Application.Exceptions.NotFound;
-	using UltimateDotNetSkeleton.Domain.Models;
-	using UltimateDotNetSkeleton.Domain.Repositories.Manager;
-	using UltimateDotNetSkeleton.Infrastructure.Logger;
-
-	internal sealed class EmployeeService : IEmployeeService
+    internal sealed class EmployeeService : IEmployeeService
 	{
 		private readonly IRepositoryManager _repository;
 		private readonly ILoggerManager _logger;
@@ -28,22 +28,22 @@
 		{
 			await CheckIfCompanyExists(companyId, trackChanges);
 
-			var employeeDb = await _repository.Employee.GetEmployeeAsync(companyId, id, trackChanges) ?? throw new EmployeeNotFoundException(id);
+			var employeeDb = await GetEmployeeForCompanyAndCheckIfItExists(companyId, id, trackChanges);
 
 			var employee = _mapper.Map<EmployeeDto>(employeeDb);
 
 			return employee;
 		}
 
-		public async Task<IEnumerable<EmployeeDto>> GetEmployeesAsync(Guid companyId, bool trackChanges)
+		public async Task<(IEnumerable<EmployeeDto> Employees, MetaData MetaData)> GetEmployeesAsync(Guid companyId, EmployeeParameters employeeParameters, bool trackChanges)
 		{
 			await CheckIfCompanyExists(companyId, trackChanges);
 
-			var employeesFromDb = await _repository.Employee.GetEmployeesAsync(companyId, trackChanges);
+			var employeesWithMetaData = await _repository.Employee.GetEmployeesAsync(companyId, employeeParameters, trackChanges);
 
-			var employeesDto = _mapper.Map<IEnumerable<EmployeeDto>>(employeesFromDb);
+			var employeesDto = _mapper.Map<IEnumerable<EmployeeDto>>(employeesWithMetaData);
 
-			return employeesDto;
+			return (employeesDto, employeesWithMetaData.MetaData);
 		}
 
 		public async Task<EmployeeDto> CreateEmployeeForCompanyAsync(Guid companyId, EmployeeForCreationDto employee, bool trackChanges)

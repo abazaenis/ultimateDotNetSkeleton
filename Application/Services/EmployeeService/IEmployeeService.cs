@@ -1,13 +1,14 @@
 ﻿namespace UltimateDotNetSkeleton.Application.Services.EmployeeService
 {
-	using UltimateDotNetSkeleton.Application.DataTransferObjects.Employee;
-	using UltimateDotNetSkeleton.Domain.Models;
+    using UltimateDotNetSkeleton.Application.DTOs.Employee;
+    using UltimateDotNetSkeleton.Domain.Models;
+	using UltimateDotNetSkeleton.Shared.RequestFeatures;
 
-	public interface IEmployeeService
+    public interface IEmployeeService
 	{
 		Task<EmployeeDto> GetEmployeeAsync(Guid companyId, Guid id, bool trackChanges);
 
-		Task<IEnumerable<EmployeeDto>> GetEmployeesAsync(Guid companyId, bool trackChanges);
+		Task<(IEnumerable<EmployeeDto> Employees, MetaData MetaData)> GetEmployeesAsync(Guid companyId, EmployeeParameters employeeParameters, bool trackChanges);
 
 		Task<EmployeeDto> CreateEmployeeForCompanyAsync(Guid companyId, EmployeeForCreationDto employee, bool trackChanges);
 

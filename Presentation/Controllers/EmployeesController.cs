@@ -1,11 +1,14 @@
 ﻿namespace UltimateDotNetSkeleton.Presentation.Controllers
 {
+	using System.Text.Json;
+
 	using Microsoft.AspNetCore.JsonPatch;
 	using Microsoft.AspNetCore.Mvc;
 
-	using UltimateDotNetSkeleton.ActionFilters;
-	using UltimateDotNetSkeleton.Application.DataTransferObjects.Employee;
+	using UltimateDotNetSkeleton.Application.DTOs.Employee;
 	using UltimateDotNetSkeleton.Application.Services.Manager;
+	using UltimateDotNetSkeleton.Presentation.ActionFilters;
+	using UltimateDotNetSkeleton.Shared.RequestFeatures;
 
 	[Route("api/companies/{companyId}/employees")]
 	[ApiController]
@@ -27,11 +30,13 @@
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> GetEmployeesForCompany(Guid companyId)
+		public async Task<IActionResult> GetEmployeesForCompany(Guid companyId, [FromQuery] EmployeeParameters employeeParameters)
 		{
-			var employees = await _service.EmployeeService.GetEmployeesAsync(companyId, trackChanges: false);
+			var pagedResult = await _service.EmployeeService.GetEmployeesAsync(companyId, employeeParameters, trackChanges: false);
 
-			return Ok(employees);
+			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.MetaData));
+
+			return Ok(pagedResult.Employees);
 		}
 
 		[HttpPost]
