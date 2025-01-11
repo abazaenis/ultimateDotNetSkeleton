@@ -5,7 +5,8 @@
 
     using AutoMapper;
     using UltimateDotNetSkeleton.Application.DTOs.Employee;
-    using UltimateDotNetSkeleton.Application.Exceptions.NotFound;
+	using UltimateDotNetSkeleton.Application.Exceptions.BadRequest;
+	using UltimateDotNetSkeleton.Application.Exceptions.NotFound;
     using UltimateDotNetSkeleton.Domain.Models;
     using UltimateDotNetSkeleton.Domain.Repositories.Manager;
     using UltimateDotNetSkeleton.Infrastructure.Logger;
@@ -37,6 +38,11 @@
 
 		public async Task<(IEnumerable<EmployeeDto> Employees, MetaData MetaData)> GetEmployeesAsync(Guid companyId, EmployeeParameters employeeParameters, bool trackChanges)
 		{
+			if (!employeeParameters.ValidAgeRange)
+			{
+				throw new MaxAgeRangeBadRequestException();
+			}
+
 			await CheckIfCompanyExists(companyId, trackChanges);
 
 			var employeesWithMetaData = await _repository.Employee.GetEmployeesAsync(companyId, employeeParameters, trackChanges);
