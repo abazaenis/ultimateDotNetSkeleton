@@ -1,4 +1,4 @@
-﻿namespace UltimateDotNetSkeleton.Application.Manager
+﻿namespace UltimateDotNetSkeleton.Application.Services.Manager
 {
     using UltimateDotNetSkeleton.Application.Services.CompanyService;
     using UltimateDotNetSkeleton.Application.Services.EmployeeService;

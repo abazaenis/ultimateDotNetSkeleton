@@ -1,4 +1,4 @@
-﻿namespace UltimateDotNetSkeleton.Application.Manager
+﻿namespace UltimateDotNetSkeleton.Application.Services.Manager
 {
     using AutoMapper;
     using UltimateDotNetSkeleton.Application.Services.CompanyService;

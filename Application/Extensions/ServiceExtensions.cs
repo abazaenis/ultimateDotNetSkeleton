@@ -1,7 +1,7 @@
 ﻿namespace UltimateDotNetSkeleton.Application.Extensions
 {
     using Microsoft.EntityFrameworkCore;
-    using UltimateDotNetSkeleton.Application.Manager;
+    using UltimateDotNetSkeleton.Application.Services.Manager;
     using UltimateDotNetSkeleton.Domain.Repositories.Context;
     using UltimateDotNetSkeleton.Domain.Repositories.Manager;
     using UltimateDotNetSkeleton.Infrastructure.Logger;
