@@ -1,26 +1,26 @@
 ﻿namespace UltimateDotNetSkeleton.Domain.Repositories.Manager
 {
-    using UltimateDotNetSkeleton.Domain.Repositories.CompanyRepository;
-    using UltimateDotNetSkeleton.Domain.Repositories.Context;
-    using UltimateDotNetSkeleton.Domain.Repositories.EmployeeRepository;
+	using UltimateDotNetSkeleton.Domain.Repositories.CompanyRepository;
+	using UltimateDotNetSkeleton.Domain.Repositories.Context;
+	using UltimateDotNetSkeleton.Domain.Repositories.EmployeeRepository;
 
-    public sealed class RepositoryManager : IRepositoryManager
-    {
-        private readonly RepositoryContext _repositoryContext;
-        private readonly Lazy<ICompanyRepository> _companyRepository;
-        private readonly Lazy<IEmployeeRepository> _employeeRepository;
+	public sealed class RepositoryManager : IRepositoryManager
+	{
+		private readonly RepositoryContext _repositoryContext;
+		private readonly Lazy<ICompanyRepository> _companyRepository;
+		private readonly Lazy<IEmployeeRepository> _employeeRepository;
 
-        public RepositoryManager(RepositoryContext repositoryContext)
-        {
-            _repositoryContext = repositoryContext;
-            _companyRepository = new Lazy<ICompanyRepository>(() => new CompanyRepository(repositoryContext));
-            _employeeRepository = new Lazy<IEmployeeRepository>(() => new EmployeeRepository(repositoryContext));
-        }
+		public RepositoryManager(RepositoryContext repositoryContext)
+		{
+			_repositoryContext = repositoryContext;
+			_companyRepository = new Lazy<ICompanyRepository>(() => new CompanyRepository(repositoryContext));
+			_employeeRepository = new Lazy<IEmployeeRepository>(() => new EmployeeRepository(repositoryContext));
+		}
 
-        public ICompanyRepository Company => _companyRepository.Value;
+		public ICompanyRepository Company => _companyRepository.Value;
 
-        public IEmployeeRepository Employee => _employeeRepository.Value;
+		public IEmployeeRepository Employee => _employeeRepository.Value;
 
-        public async Task SaveAsync() => await _repositoryContext.SaveChangesAsync();
-    }
+		public async Task SaveAsync() => await _repositoryContext.SaveChangesAsync();
+	}
 }

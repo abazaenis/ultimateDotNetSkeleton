@@ -1,24 +1,25 @@
 ﻿namespace UltimateDotNetSkeleton.Domain.Repositories.Context
 {
-    using System.IO;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Design;
-    using Microsoft.Extensions.Configuration;
+	using System.IO;
 
-    // Provides a design-time factory for creating the DbContext, required for EF Core tools like migrations.
-    public class RepositoryContextFactory : IDesignTimeDbContextFactory<RepositoryContext>
-    {
-        public RepositoryContext CreateDbContext(string[] args)
-        {
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
-                .Build();
+	using Microsoft.EntityFrameworkCore;
+	using Microsoft.EntityFrameworkCore.Design;
+	using Microsoft.Extensions.Configuration;
 
-            var builder = new DbContextOptionsBuilder<RepositoryContext>()
-                .UseNpgsql(configuration.GetConnectionString("PostgresConnection"));
+	// Provides a design-time factory for creating the DbContext, required for EF Core tools like migrations.
+	public class RepositoryContextFactory : IDesignTimeDbContextFactory<RepositoryContext>
+	{
+		public RepositoryContext CreateDbContext(string[] args)
+		{
+			var configuration = new ConfigurationBuilder()
+				.SetBasePath(Directory.GetCurrentDirectory())
+				.AddJsonFile("appsettings.json")
+				.Build();
 
-            return new RepositoryContext(builder.Options);
-        }
-    }
+			var builder = new DbContextOptionsBuilder<RepositoryContext>()
+				.UseNpgsql(configuration.GetConnectionString("PostgresConnection"));
+
+			return new RepositoryContext(builder.Options);
+		}
+	}
 }

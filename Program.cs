@@ -7,6 +7,7 @@ namespace UltimateDotNetSkeleton
 
 	using NLog;
 
+	using UltimateDotNetSkeleton.ActionFilters;
 	using UltimateDotNetSkeleton.Application.Extensions;
 	using UltimateDotNetSkeleton.Infrastructure.Logger;
 
@@ -36,6 +37,7 @@ namespace UltimateDotNetSkeleton
 			{
 				options.SuppressModelStateInvalidFilter = true;
 			});
+			builder.Services.AddScoped<ValidationFilterAttribute>();
 			builder.Services.AddControllers(config =>
 			{
 				config.RespectBrowserAcceptHeader = true;

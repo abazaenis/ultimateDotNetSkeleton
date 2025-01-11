@@ -1,5 +1,5 @@
 ﻿namespace UltimateDotNetSkeleton.Application.DataTransferObjects.Employee
 {
 
-	public record EmployeeForUpdateDto: EmployeeForManipulationDto;
+	public record EmployeeForUpdateDto : EmployeeForManipulationDto;
 }

@@ -1,12 +1,12 @@
 ﻿namespace UltimateDotNetSkeleton.Application.Services.Manager
 {
-    using UltimateDotNetSkeleton.Application.Services.CompanyService;
-    using UltimateDotNetSkeleton.Application.Services.EmployeeService;
+	using UltimateDotNetSkeleton.Application.Services.CompanyService;
+	using UltimateDotNetSkeleton.Application.Services.EmployeeService;
 
-    public interface IServiceManager
-    {
-        ICompanyService CompanyService { get; }
+	public interface IServiceManager
+	{
+		ICompanyService CompanyService { get; }
 
-        IEmployeeService EmployeeService { get; }
-    }
+		IEmployeeService EmployeeService { get; }
+	}
 }

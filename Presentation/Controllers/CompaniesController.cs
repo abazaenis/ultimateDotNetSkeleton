@@ -1,14 +1,15 @@
 ﻿namespace UltimateDotNetSkeleton.Presentation.Controllers
 {
-    using Microsoft.AspNetCore.Mvc;
+	using Microsoft.AspNetCore.Mvc;
 
-    using UltimateDotNetSkeleton.Application.DataTransferObjects.Company;
-    using UltimateDotNetSkeleton.Application.Services.Manager;
-    using UltimateDotNetSkeleton.Presentation.ModelBinders;
+	using UltimateDotNetSkeleton.ActionFilters;
+	using UltimateDotNetSkeleton.Application.DataTransferObjects.Company;
+	using UltimateDotNetSkeleton.Application.Services.Manager;
+	using UltimateDotNetSkeleton.Presentation.ModelBinders;
 
-    [Route("api/companies")]
-    [ApiController]
-    public class CompaniesController : ControllerBase
+	[Route("api/companies")]
+	[ApiController]
+	public class CompaniesController : ControllerBase
 	{
 		private readonly IServiceManager _service;
 
@@ -42,18 +43,9 @@
 		}
 
 		[HttpPost]
+		[ServiceFilter(typeof(ValidationFilterAttribute))]
 		public async Task<IActionResult> CreateCompany([FromBody] CompanyForCreationDto company)
 		{
-			if (company is null)
-			{
-				return BadRequest("CompanyForCreationDto object is null");
-			}
-
-			if (!ModelState.IsValid)
-			{
-				return UnprocessableEntity(ModelState);
-			}
-
 			var createdCompany = await _service.CompanyService.CreateCompanyAsync(company, trackChanges: false);
 
 			return CreatedAtRoute("CompanyById", new { id = createdCompany.Id }, createdCompany);
@@ -68,13 +60,9 @@
 		}
 
 		[HttpPut("{id:guid}")]
+		[ServiceFilter(typeof(ValidationFilterAttribute))]
 		public async Task<IActionResult> UpdateCompany(Guid id, [FromBody] CompanyForUpdateDto company)
 		{
-			if (company is null)
-			{
-				return BadRequest("CompanyForUpdateDto object is null");
-			}
-
 			await _service.CompanyService.UpdateCompanyAsync(id, company, trackChanges: true);
 
 			return NoContent();

@@ -1,28 +1,29 @@
 ﻿namespace UltimateDotNetSkeleton.Application.Mapper
 {
-    using AutoMapper;
-    using UltimateDotNetSkeleton.Application.DataTransferObjects.Company;
-    using UltimateDotNetSkeleton.Application.DataTransferObjects.Employee;
-    using UltimateDotNetSkeleton.Domain.Models;
+	using AutoMapper;
 
-    public class MappingProfile : Profile
-    {
-        public MappingProfile()
-        {
-            CreateMap<Company, CompanyDto>()
-                .ForMember(
-                    company => company.FullAddress,
-                    opt => opt.MapFrom(x => string.Join(' ', x.Address, x.Country)));
+	using UltimateDotNetSkeleton.Application.DataTransferObjects.Company;
+	using UltimateDotNetSkeleton.Application.DataTransferObjects.Employee;
+	using UltimateDotNetSkeleton.Domain.Models;
 
-            CreateMap<Employee, EmployeeDto>();
+	public class MappingProfile : Profile
+	{
+		public MappingProfile()
+		{
+			CreateMap<Company, CompanyDto>()
+				.ForMember(
+					company => company.FullAddress,
+					opt => opt.MapFrom(x => string.Join(' ', x.Address, x.Country)));
 
-            CreateMap<CompanyForCreationDto, Company>();
+			CreateMap<Employee, EmployeeDto>();
 
-            CreateMap<EmployeeForCreationDto, Employee>();
+			CreateMap<CompanyForCreationDto, Company>();
 
-            CreateMap<EmployeeForUpdateDto, Employee>().ReverseMap();
+			CreateMap<EmployeeForCreationDto, Employee>();
 
-            CreateMap<CompanyForUpdateDto, Company>();
+			CreateMap<EmployeeForUpdateDto, Employee>().ReverseMap();
+
+			CreateMap<CompanyForUpdateDto, Company>();
 		}
-    }
+	}
 }

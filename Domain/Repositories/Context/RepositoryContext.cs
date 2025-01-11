@@ -1,17 +1,18 @@
 ﻿namespace UltimateDotNetSkeleton.Domain.Repositories.Context
 {
-    using Microsoft.EntityFrameworkCore;
-    using UltimateDotNetSkeleton.Domain.Models;
+	using Microsoft.EntityFrameworkCore;
 
-    public class RepositoryContext : DbContext
-    {
-        public RepositoryContext(DbContextOptions options)
-            : base(options)
-        {
-        }
+	using UltimateDotNetSkeleton.Domain.Models;
 
-        public DbSet<Company>? Companies { get; set; }
+	public class RepositoryContext : DbContext
+	{
+		public RepositoryContext(DbContextOptions options)
+			: base(options)
+		{
+		}
 
-        public DbSet<Employee>? Employees { get; set; }
-    }
+		public DbSet<Company>? Companies { get; set; }
+
+		public DbSet<Employee>? Employees { get; set; }
+	}
 }
