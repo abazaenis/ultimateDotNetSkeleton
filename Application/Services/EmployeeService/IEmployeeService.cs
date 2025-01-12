@@ -1,10 +1,10 @@
 ﻿namespace UltimateDotNetSkeleton.Application.Services.EmployeeService
 {
-    using UltimateDotNetSkeleton.Application.DTOs.Employee;
-    using UltimateDotNetSkeleton.Domain.Models;
+	using UltimateDotNetSkeleton.Application.DTOs.Employee;
+	using UltimateDotNetSkeleton.Domain.Models;
 	using UltimateDotNetSkeleton.Shared.RequestFeatures;
 
-    public interface IEmployeeService
+	public interface IEmployeeService
 	{
 		Task<EmployeeDto> GetEmployeeAsync(Guid companyId, Guid id, bool trackChanges);
 

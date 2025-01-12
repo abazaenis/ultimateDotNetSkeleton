@@ -1,19 +1,20 @@
 ﻿namespace UltimateDotNetSkeleton.Application.DTOs.Company
 {
-    using System.ComponentModel.DataAnnotations;
-    using UltimateDotNetSkeleton.Application.DTOs.Employee;
+	using System.ComponentModel.DataAnnotations;
 
-    public record CompanyForCreationDto
-    {
-        [Required(ErrorMessage = "Company name is a required field.")]
-        public required string Name { get; set; }
+	using UltimateDotNetSkeleton.Application.DTOs.Employee;
 
-        [Required(ErrorMessage = "Company address is a required field.")]
-        public required string Address { get; set; }
+	public record CompanyForCreationDto
+	{
+		[Required(ErrorMessage = "Company name is a required field.")]
+		public required string Name { get; set; }
 
-        [Required(ErrorMessage = "Company country is a required field.")]
-        public required string Country { get; set; }
+		[Required(ErrorMessage = "Company address is a required field.")]
+		public required string Address { get; set; }
 
-        public IEnumerable<EmployeeForCreationDto>? Employees { get; set; }
-    }
+		[Required(ErrorMessage = "Company country is a required field.")]
+		public required string Country { get; set; }
+
+		public IEnumerable<EmployeeForCreationDto>? Employees { get; set; }
+	}
 }
