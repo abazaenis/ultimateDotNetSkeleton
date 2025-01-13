@@ -1,10 +1,14 @@
 ﻿namespace UltimateDotNetSkeleton.Infrastructure.Extensions
 {
 	using System.Text;
+	using System.Threading.RateLimiting;
+	using AspNetCoreRateLimit;
 
 	using Microsoft.AspNetCore.Authentication.JwtBearer;
 	using Microsoft.AspNetCore.Identity;
+	using Microsoft.AspNetCore.RateLimiting;
 	using Microsoft.EntityFrameworkCore;
+	using Microsoft.Extensions.Options;
 	using Microsoft.IdentityModel.Tokens;
 
 	using UltimateDotNetSkeleton.Application.Services.Manager;
@@ -36,6 +40,23 @@
 					ValidAudience = jwtSettings["validAudience"],
 					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
 				};
+			});
+		}
+
+		public static void ConfigureRateLimitingOptions(this IServiceCollection services)
+		{
+			services.AddRateLimiter(options =>
+			{
+				options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+				options.AddPolicy("FixedTokenPolicy", httpContext =>
+					RateLimitPartition.GetFixedWindowLimiter(
+						partitionKey: httpContext.User.Identity?.Name?.ToString(),
+						factory: _ => new FixedWindowRateLimiterOptions
+						{
+							PermitLimit = 10,
+							Window = TimeSpan.FromMinutes(10)
+			}));
 			});
 		}
 

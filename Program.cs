@@ -1,16 +1,17 @@
 namespace UltimateDotNetSkeleton
 {
-    using Microsoft.AspNetCore.HttpOverrides;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Formatters;
-    using Microsoft.Extensions.Options;
+	using Microsoft.AspNetCore.HttpOverrides;
+	using Microsoft.AspNetCore.Mvc;
+	using Microsoft.AspNetCore.Mvc.Formatters;
+	using Microsoft.Extensions.Options;
 
-    using NLog;
-    using UltimateDotNetSkeleton.Infrastructure.Extensions;
-    using UltimateDotNetSkeleton.Infrastructure.Logger;
-    using UltimateDotNetSkeleton.Presentation.ActionFilters;
+	using NLog;
 
-    public class Program
+	using UltimateDotNetSkeleton.Infrastructure.Extensions;
+	using UltimateDotNetSkeleton.Infrastructure.Logger;
+	using UltimateDotNetSkeleton.Presentation.ActionFilters;
+
+	public class Program
 	{
 		public static void Main(string[] args)
 		{
@@ -47,6 +48,9 @@ namespace UltimateDotNetSkeleton
 			builder.Services.AddSwaggerGen();
 			builder.Services.AddAutoMapper(typeof(Program));
 			builder.Services.AddAuthentication();
+			builder.Services.AddMemoryCache();
+			builder.Services.ConfigureRateLimitingOptions();
+			builder.Services.AddHttpContextAccessor();
 			builder.Services.ConfigureIdentity();
 			builder.Services.ConfigureJWT(builder.Configuration);
 
@@ -78,6 +82,8 @@ namespace UltimateDotNetSkeleton
 
 			app.UseAuthentication();
 			app.UseAuthorization();
+
+			app.UseRateLimiter();
 
 			app.MapControllers();
 
