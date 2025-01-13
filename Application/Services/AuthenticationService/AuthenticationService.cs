@@ -14,6 +14,7 @@
 	using UltimateDotNetSkeleton.Application.DTOs.Token;
 	using UltimateDotNetSkeleton.Application.DTOs.User;
 	using UltimateDotNetSkeleton.Application.Exceptions.BadRequest;
+	using UltimateDotNetSkeleton.Domain.ConfigurationModels;
 	using UltimateDotNetSkeleton.Domain.Models;
 	using UltimateDotNetSkeleton.Infrastructure.Logger;
 
@@ -29,6 +30,8 @@
 
 		private readonly IConfiguration _configuration;
 
+		private readonly JwtConfiguration _jwtConfiguration;
+
 		private User? _user;
 
 		public AuthenticationService(ILoggerManager logger, IMapper mapper, UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
@@ -38,6 +41,8 @@
 			_userManager = userManager;
 			_roleManager = roleManager;
 			_configuration = configuration;
+			_jwtConfiguration = new JwtConfiguration();
+			_configuration.Bind(_jwtConfiguration.Section, _jwtConfiguration);
 		}
 
 		public async Task<IdentityResult> RegisterUser(UserForRegistrationDto userForRegistration)
@@ -109,14 +114,23 @@
 			}
 
 			_user = user;
-			_user = user;
 
 			return await CreateToken(populateExp: false);
 		}
 
+		private static string GenerateRefreshToken()
+		{
+			var randomNumber = new byte[32];
+			using (var rng = RandomNumberGenerator.Create())
+			{
+				rng.GetBytes(randomNumber);
+				return Convert.ToBase64String(randomNumber);
+			}
+		}
+
 		private SigningCredentials GetSigningCredentials()
 		{
-			var key = Encoding.UTF8.GetBytes(_configuration["JwtSettings:secretKey"]);
+			var key = Encoding.UTF8.GetBytes(_jwtConfiguration.SecretKey!);
 
 			var secret = new SymmetricSecurityKey(key);
 
@@ -145,37 +159,26 @@
 			var jwtSettings = _configuration.GetSection("JwtSettings");
 
 			var tokenOptions = new JwtSecurityToken(
-				issuer: jwtSettings["validIssuer"],
-				audience: jwtSettings["validAudience"],
+				issuer: _jwtConfiguration.ValidIssuer,
+				audience: _jwtConfiguration.ValidAudience,
 				claims: claims,
-				expires: DateTime.Now.AddMinutes(Convert.ToDouble(jwtSettings["expires"])),
+				expires: DateTime.Now.AddMinutes(Convert.ToDouble(_jwtConfiguration.Expires)),
 				signingCredentials: signingCredentials);
 
 			return tokenOptions;
 		}
 
-		private string GenerateRefreshToken()
-		{
-			var randomNumber = new byte[32];
-			using (var rng = RandomNumberGenerator.Create())
-			{
-				rng.GetBytes(randomNumber);
-				return Convert.ToBase64String(randomNumber);
-			}
-		}
-
 		private ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
 		{
-			var jwtSettings = _configuration.GetSection("JwtSettings");
 			var tokenValidationParameters = new TokenValidationParameters
 			{
 				ValidateAudience = true,
 				ValidateIssuer = true,
 				ValidateIssuerSigningKey = true,
-				IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSettings:secretKey"])),
-				ValidateLifetime = true,
-				ValidIssuer = jwtSettings["validIssuer"],
-				ValidAudience = jwtSettings["validAudience"],
+				IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtConfiguration.SecretKey!)),
+				ValidateLifetime = false,
+				ValidIssuer = _jwtConfiguration.ValidIssuer,
+				ValidAudience = _jwtConfiguration.ValidAudience,
 			};
 
 			var tokenHandler = new JwtSecurityTokenHandler();

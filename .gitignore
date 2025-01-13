@@ -8,6 +8,8 @@ appsettings.json
 appsettings.Development.json
 appsettings.*.json
 
+internallog.txt
+
 # User-specific files
 *.rsuser
 *.suo

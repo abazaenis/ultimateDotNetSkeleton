@@ -2,16 +2,14 @@
 {
 	using System.Text;
 	using System.Threading.RateLimiting;
-	using AspNetCoreRateLimit;
 
 	using Microsoft.AspNetCore.Authentication.JwtBearer;
 	using Microsoft.AspNetCore.Identity;
-	using Microsoft.AspNetCore.RateLimiting;
 	using Microsoft.EntityFrameworkCore;
-	using Microsoft.Extensions.Options;
 	using Microsoft.IdentityModel.Tokens;
 
 	using UltimateDotNetSkeleton.Application.Services.Manager;
+	using UltimateDotNetSkeleton.Domain.ConfigurationModels;
 	using UltimateDotNetSkeleton.Domain.Context;
 	using UltimateDotNetSkeleton.Domain.Models;
 	using UltimateDotNetSkeleton.Domain.Repositories.Manager;
@@ -21,8 +19,10 @@
     {
 		public static void ConfigureJWT(this IServiceCollection services, IConfiguration configuration)
 		{
-			var jwtSettings = configuration.GetSection("JwtSettings");
-			var secretKey = jwtSettings["secretKey"];
+			var jwtConfiguration = new JwtConfiguration();
+			configuration.Bind(jwtConfiguration.Section, jwtConfiguration);
+
+			var secretKey = jwtConfiguration.SecretKey;
 
 			services.AddAuthentication(opt =>
 			{
@@ -36,9 +36,9 @@
 					ValidateAudience = true,
 					ValidateLifetime = true,
 					ValidateIssuerSigningKey = true,
-					ValidIssuer = jwtSettings["validIssuer"],
-					ValidAudience = jwtSettings["validAudience"],
-					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
+					ValidIssuer = jwtConfiguration.ValidIssuer,
+					ValidAudience = jwtConfiguration.ValidAudience,
+					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey!)),
 				};
 			});
 		}
@@ -55,8 +55,8 @@
 						factory: _ => new FixedWindowRateLimiterOptions
 						{
 							PermitLimit = 10,
-							Window = TimeSpan.FromMinutes(10)
-			}));
+							Window = TimeSpan.FromMinutes(10),
+						}));
 			});
 		}
 
