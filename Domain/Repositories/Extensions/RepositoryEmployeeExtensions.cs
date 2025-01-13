@@ -1,6 +1,8 @@
 ﻿namespace UltimateDotNetSkeleton.Domain.Repositories.Extensions
 {
     using System.Linq.Dynamic.Core;
+    using System.Reflection;
+    using System.Text;
     using Microsoft.EntityFrameworkCore;
     using UltimateDotNetSkeleton.Domain.Models;
     using UltimateDotNetSkeleton.Domain.Repositories.Extensions.Utility;

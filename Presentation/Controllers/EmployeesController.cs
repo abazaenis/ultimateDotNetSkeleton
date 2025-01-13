@@ -1,18 +1,17 @@
 ﻿namespace UltimateDotNetSkeleton.Presentation.Controllers
 {
-	using System.Text.Json;
+    using System.Text.Json;
 
-	using Microsoft.AspNetCore.JsonPatch;
-	using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.JsonPatch;
+    using Microsoft.AspNetCore.Mvc;
+    using UltimateDotNetSkeleton.Application.DTOs.Employee;
+    using UltimateDotNetSkeleton.Application.RequestFeatures;
+    using UltimateDotNetSkeleton.Application.Services.Manager;
+    using UltimateDotNetSkeleton.Presentation.ActionFilters;
 
-	using UltimateDotNetSkeleton.Application.DTOs.Employee;
-	using UltimateDotNetSkeleton.Application.Services.Manager;
-	using UltimateDotNetSkeleton.Presentation.ActionFilters;
-	using UltimateDotNetSkeleton.Shared.RequestFeatures;
-
-	[Route("api/companies/{companyId}/employees")]
-	[ApiController]
-	public class EmployeesController : ControllerBase
+    [Route("api/companies/{companyId}/employees")]
+    [ApiController]
+    public class EmployeesController : ControllerBase
 	{
 		private readonly IServiceManager _service;
 

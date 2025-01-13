@@ -1,14 +1,13 @@
 ﻿namespace UltimateDotNetSkeleton.Domain.Repositories.CompanyRepository
 {
-	using System.Collections.Generic;
+    using System.Collections.Generic;
 
-	using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
+    using UltimateDotNetSkeleton.Domain.Context;
+    using UltimateDotNetSkeleton.Domain.Models;
+    using UltimateDotNetSkeleton.Domain.Repositories.Base;
 
-	using UltimateDotNetSkeleton.Domain.Models;
-	using UltimateDotNetSkeleton.Domain.Repositories.Base;
-	using UltimateDotNetSkeleton.Domain.Repositories.Context;
-
-	public class CompanyRepository : RepositoryBase<Company>, ICompanyRepository
+    public class CompanyRepository : RepositoryBase<Company>, ICompanyRepository
 	{
 		public CompanyRepository(RepositoryContext repositoryContext)
 			: base(repositoryContext)

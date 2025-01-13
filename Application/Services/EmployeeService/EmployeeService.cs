@@ -1,19 +1,18 @@
 ﻿namespace UltimateDotNetSkeleton.Application.Services.EmployeeService
 {
-	using System;
-	using System.Collections.Generic;
+    using System;
+    using System.Collections.Generic;
 
-	using AutoMapper;
+    using AutoMapper;
+    using UltimateDotNetSkeleton.Application.DTOs.Employee;
+    using UltimateDotNetSkeleton.Application.Exceptions.BadRequest;
+    using UltimateDotNetSkeleton.Application.Exceptions.NotFound;
+    using UltimateDotNetSkeleton.Application.RequestFeatures;
+    using UltimateDotNetSkeleton.Domain.Models;
+    using UltimateDotNetSkeleton.Domain.Repositories.Manager;
+    using UltimateDotNetSkeleton.Infrastructure.Logger;
 
-	using UltimateDotNetSkeleton.Application.DTOs.Employee;
-	using UltimateDotNetSkeleton.Application.Exceptions.BadRequest;
-	using UltimateDotNetSkeleton.Application.Exceptions.NotFound;
-	using UltimateDotNetSkeleton.Domain.Models;
-	using UltimateDotNetSkeleton.Domain.Repositories.Manager;
-	using UltimateDotNetSkeleton.Infrastructure.Logger;
-	using UltimateDotNetSkeleton.Shared.RequestFeatures;
-
-	internal sealed class EmployeeService : IEmployeeService
+    internal sealed class EmployeeService : IEmployeeService
 	{
 		private readonly IRepositoryManager _repository;
 		private readonly ILoggerManager _logger;

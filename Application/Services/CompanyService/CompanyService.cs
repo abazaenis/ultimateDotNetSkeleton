@@ -1,18 +1,17 @@
 ﻿namespace UltimateDotNetSkeleton.Application.Services.CompanyService
 {
-	using System;
-	using System.Collections.Generic;
+    using System;
+    using System.Collections.Generic;
 
-	using AutoMapper;
+    using AutoMapper;
+    using UltimateDotNetSkeleton.Application.DTOs.Company;
+    using UltimateDotNetSkeleton.Application.Exceptions.BadRequest;
+    using UltimateDotNetSkeleton.Application.Exceptions.NotFound;
+    using UltimateDotNetSkeleton.Domain.Models;
+    using UltimateDotNetSkeleton.Domain.Repositories.Manager;
+    using UltimateDotNetSkeleton.Infrastructure.Logger;
 
-	using UltimateDotNetSkeleton.Application.DTOs.Company;
-	using UltimateDotNetSkeleton.Application.Exceptions.BadRequest;
-	using UltimateDotNetSkeleton.Application.Exceptions.NotFound;
-	using UltimateDotNetSkeleton.Domain.Models;
-	using UltimateDotNetSkeleton.Domain.Repositories.Manager;
-	using UltimateDotNetSkeleton.Infrastructure.Logger;
-
-	internal sealed class CompanyService : ICompanyService
+    internal sealed class CompanyService : ICompanyService
 	{
 		private readonly IRepositoryManager _repository;
 		private readonly ILoggerManager _logger;

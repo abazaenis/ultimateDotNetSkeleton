@@ -1,13 +1,13 @@
 ﻿namespace UltimateDotNetSkeleton.Application.DTOs.Employee
 {
-	public record EmployeeDto
-	{
-		public Guid Id { get; set; }
+    public record EmployeeDto
+    {
+        public Guid Id { get; set; }
 
-		public required string Name { get; set; }
+        public required string Name { get; set; }
 
-		public required int Age { get; set; }
+        public required int Age { get; set; }
 
-		public required string Position { get; set; }
-	}
+        public required string Position { get; set; }
+    }
 }

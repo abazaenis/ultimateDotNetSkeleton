@@ -1,7 +1,7 @@
 ﻿namespace UltimateDotNetSkeleton.Presentation.Controllers
 {
+	using Microsoft.AspNetCore.Authorization;
 	using Microsoft.AspNetCore.Mvc;
-
 	using UltimateDotNetSkeleton.Application.DTOs.Company;
 	using UltimateDotNetSkeleton.Application.Services.Manager;
 	using UltimateDotNetSkeleton.Presentation.ActionFilters;
@@ -27,6 +27,7 @@
 		}
 
 		[HttpGet]
+		[Authorize(Roles = "Manager")]
 		public async Task<IActionResult> GetCompanies()
 		{
 			var companies = await _service.CompanyService.GetAllCompaniesAsync(trackChanges: false);

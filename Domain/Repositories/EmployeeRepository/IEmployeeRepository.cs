@@ -1,9 +1,9 @@
 ﻿namespace UltimateDotNetSkeleton.Domain.Repositories.EmployeeRepository
 {
-	using UltimateDotNetSkeleton.Domain.Models;
-	using UltimateDotNetSkeleton.Shared.RequestFeatures;
+    using UltimateDotNetSkeleton.Application.RequestFeatures;
+    using UltimateDotNetSkeleton.Domain.Models;
 
-	public interface IEmployeeRepository
+    public interface IEmployeeRepository
 	{
 		Task<PagedList<Employee>> GetEmployeesAsync(Guid companyId, EmployeeParameters employeeParameters, bool trackChanges);
 

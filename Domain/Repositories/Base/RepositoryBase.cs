@@ -1,12 +1,11 @@
 ﻿namespace UltimateDotNetSkeleton.Domain.Repositories.Base
 {
-	using System.Linq.Expressions;
+    using System.Linq.Expressions;
 
-	using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
+    using UltimateDotNetSkeleton.Domain.Context;
 
-	using UltimateDotNetSkeleton.Domain.Repositories.Context;
-
-	public abstract class RepositoryBase<T> : IRepositoryBase<T>
+    public abstract class RepositoryBase<T> : IRepositoryBase<T>
 		where T : class
 	{
 		private readonly RepositoryContext repositoryContext;

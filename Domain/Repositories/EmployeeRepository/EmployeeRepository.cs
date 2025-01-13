@@ -1,16 +1,15 @@
 ﻿namespace UltimateDotNetSkeleton.Domain.Repositories.EmployeeRepository
 {
-	using System;
+    using System;
 
-	using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
+    using UltimateDotNetSkeleton.Application.RequestFeatures;
+    using UltimateDotNetSkeleton.Domain.Context;
+    using UltimateDotNetSkeleton.Domain.Models;
+    using UltimateDotNetSkeleton.Domain.Repositories.Base;
+    using UltimateDotNetSkeleton.Domain.Repositories.Extensions;
 
-	using UltimateDotNetSkeleton.Domain.Models;
-	using UltimateDotNetSkeleton.Domain.Repositories.Base;
-	using UltimateDotNetSkeleton.Domain.Repositories.Context;
-	using UltimateDotNetSkeleton.Domain.Repositories.Extensions;
-	using UltimateDotNetSkeleton.Shared.RequestFeatures;
-
-	public class EmployeeRepository : RepositoryBase<Employee>, IEmployeeRepository
+    public class EmployeeRepository : RepositoryBase<Employee>, IEmployeeRepository
 	{
 		public EmployeeRepository(RepositoryContext repositoryContext)
 			: base(repositoryContext)

@@ -1,10 +1,10 @@
 ﻿namespace UltimateDotNetSkeleton.Domain.Repositories.Manager
 {
-	using UltimateDotNetSkeleton.Domain.Repositories.CompanyRepository;
-	using UltimateDotNetSkeleton.Domain.Repositories.Context;
-	using UltimateDotNetSkeleton.Domain.Repositories.EmployeeRepository;
+    using UltimateDotNetSkeleton.Domain.Context;
+    using UltimateDotNetSkeleton.Domain.Repositories.CompanyRepository;
+    using UltimateDotNetSkeleton.Domain.Repositories.EmployeeRepository;
 
-	public sealed class RepositoryManager : IRepositoryManager
+    public sealed class RepositoryManager : IRepositoryManager
 	{
 		private readonly RepositoryContext _repositoryContext;
 		private readonly Lazy<ICompanyRepository> _companyRepository;
