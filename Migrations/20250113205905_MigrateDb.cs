@@ -10,7 +10,7 @@ using NpgsqlTypes;
 namespace UltimateDotNetSkeleton.Migrations
 {
     /// <inheritdoc />
-    public partial class DbMigration : Migration
+    public partial class MigrateDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -36,6 +36,8 @@ namespace UltimateDotNetSkeleton.Migrations
                     Id = table.Column<string>(type: "text", nullable: false),
                     FirstName = table.Column<string>(type: "text", nullable: false),
                     LastName = table.Column<string>(type: "text", nullable: false),
+                    RefreshToken = table.Column<string>(type: "text", nullable: true),
+                    RefreshTokenExpiryTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -203,8 +205,8 @@ namespace UltimateDotNetSkeleton.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "094a59ca-e8c5-4d06-ae46-baf5531fb0ec", null, "Administrator", "ADMINISTRATOR" },
-                    { "222fc3d3-28fa-4269-9729-0735b0c16972", null, "Manager", "MANAGER" }
+                    { "ace167d5-0024-4974-8667-19732c32b1d6", null, "Manager", "MANAGER" },
+                    { "ae3fcda1-913c-4940-952b-e800c2465ad1", null, "Administrator", "ADMINISTRATOR" }
                 });
 
             migrationBuilder.CreateIndex(

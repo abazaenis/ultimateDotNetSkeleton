@@ -51,13 +51,13 @@ namespace UltimateDotNetSkeleton.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "222fc3d3-28fa-4269-9729-0735b0c16972",
+                            Id = "ace167d5-0024-4974-8667-19732c32b1d6",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "094a59ca-e8c5-4d06-ae46-baf5531fb0ec",
+                            Id = "ae3fcda1-913c-4940-952b-e800c2465ad1",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -282,6 +282,12 @@ namespace UltimateDotNetSkeleton.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("boolean");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("RefreshTokenExpiryTime")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");

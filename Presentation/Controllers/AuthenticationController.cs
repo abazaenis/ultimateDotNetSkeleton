@@ -26,10 +26,9 @@
 				return Unauthorized();
 			}
 
-			return Ok(new
-			{
-				Token = await _service.AuthenticationService.CreateToken(),
-			});
+			var tokenDto = await _service.AuthenticationService.CreateToken(populateExp: true);
+
+			return Ok(tokenDto);
 		}
 
 		[HttpPost]
