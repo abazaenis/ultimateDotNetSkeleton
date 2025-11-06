@@ -5,10 +5,9 @@ namespace UltimateDotNetSkeleton
 	using Microsoft.AspNetCore.Mvc.Formatters;
 	using Microsoft.Extensions.Options;
 
-	using NLog;
+	using Serilog;
 
 	using UltimateDotNetSkeleton.Infrastructure.Extensions;
-	using UltimateDotNetSkeleton.Infrastructure.Logger;
 	using UltimateDotNetSkeleton.Presentation.ActionFilters;
 
 	public class Program
@@ -18,8 +17,8 @@ namespace UltimateDotNetSkeleton
 			var builder = WebApplication.CreateBuilder(args);
 
 			// Logger configuration
-			var loggerConfigFilePath = Path.Combine(Directory.GetCurrentDirectory(), "nlog.config");
-			LogManager.Setup().LoadConfigurationFromFile(loggerConfigFilePath);
+			builder.Services.ConfigureLogging(builder.Configuration);
+			builder.Host.UseSerilog();
 
 			NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter() =>
 				new ServiceCollection().AddLogging().AddMvc().AddNewtonsoftJson()
@@ -29,7 +28,6 @@ namespace UltimateDotNetSkeleton
 
 			// Service configuration
 			builder.Services.ConfigureCors();
-			builder.Services.ConfigureLoggerService();
 			builder.Services.ConfigureRepositoryManager();
 			builder.Services.ConfigureServiceManager();
 			builder.Services.ConfigureSqlContext(builder.Configuration);
@@ -56,8 +54,7 @@ namespace UltimateDotNetSkeleton
 
 			var app = builder.Build();
 
-			var logger = app.Services.GetRequiredService<ILoggerManager>();
-			app.ConfigureExceptionHandler(logger);
+			app.ConfigureExceptionHandler();
 
 			// Configure middleware pipeline
 			if (app.Environment.IsDevelopment())

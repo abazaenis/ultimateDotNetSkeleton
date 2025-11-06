@@ -9,7 +9,6 @@
 	using UltimateDotNetSkeleton.Application.Services.EmployeeService;
 	using UltimateDotNetSkeleton.Domain.Models;
 	using UltimateDotNetSkeleton.Domain.Repositories.Manager;
-	using UltimateDotNetSkeleton.Infrastructure.Logger;
 
 	public sealed class ServiceManager : IServiceManager
 	{
@@ -19,18 +18,17 @@
 
 		public ServiceManager(
 			IRepositoryManager repositoryManager,
-			ILoggerManager logger,
 			IMapper mapper,
 			UserManager<User> userManager,
 			RoleManager<IdentityRole> roleManager,
 			IConfiguration configuration)
 		{
 			_companyService = new Lazy<ICompanyService>(() =>
-				new CompanyService(repositoryManager, logger, mapper));
+				new CompanyService(repositoryManager, mapper));
 			_employeeService = new Lazy<IEmployeeService>(() =>
-				new EmployeeService(repositoryManager, logger, mapper));
+				new EmployeeService(repositoryManager, mapper));
 			_authenticationService = new Lazy<IAuthenticationService>(() =>
-				new AuthenticationService(logger, mapper, userManager, roleManager, configuration));
+				new AuthenticationService(mapper, userManager, roleManager, configuration));
 		}
 
 		public ICompanyService CompanyService => _companyService.Value;

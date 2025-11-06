@@ -4,14 +4,15 @@
 
     using Microsoft.AspNetCore.Diagnostics;
 
+    using Serilog;
+
     using UltimateDotNetSkeleton.Application.Exceptions.BadRequest;
     using UltimateDotNetSkeleton.Exceptions.NotFound;
     using UltimateDotNetSkeleton.Infrastructure.Exceptions;
-    using UltimateDotNetSkeleton.Infrastructure.Logger;
 
     public static class ExceptionMiddlewareExtensions
     {
-        public static void ConfigureExceptionHandler(this WebApplication app, ILoggerManager logger)
+        public static void ConfigureExceptionHandler(this WebApplication app)
         {
             app.UseExceptionHandler(appError =>
             {
@@ -31,7 +32,7 @@
                             _ => StatusCodes.Status500InternalServerError,
                         };
 
-                        logger.LogError($"Something went wrong: {contextFeature.Error}");
+                        Log.Error(contextFeature.Error, "Something went wrong: {Error}", contextFeature.Error);
 
                         await context.Response.WriteAsync(new ErrorDetails()
                         {

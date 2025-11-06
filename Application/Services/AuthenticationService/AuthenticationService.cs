@@ -11,17 +11,16 @@
 	using Microsoft.EntityFrameworkCore;
 	using Microsoft.IdentityModel.Tokens;
 
+	using Serilog;
+
 	using UltimateDotNetSkeleton.Application.DTOs.Token;
 	using UltimateDotNetSkeleton.Application.DTOs.User;
 	using UltimateDotNetSkeleton.Application.Exceptions.BadRequest;
 	using UltimateDotNetSkeleton.Domain.ConfigurationModels;
 	using UltimateDotNetSkeleton.Domain.Models;
-	using UltimateDotNetSkeleton.Infrastructure.Logger;
 
 	public class AuthenticationService : IAuthenticationService
 	{
-		private readonly ILoggerManager _logger;
-
 		private readonly IMapper _mapper;
 
 		private readonly UserManager<User> _userManager;
@@ -34,9 +33,8 @@
 
 		private User? _user;
 
-		public AuthenticationService(ILoggerManager logger, IMapper mapper, UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+		public AuthenticationService(IMapper mapper, UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
 		{
-			_logger = logger;
 			_mapper = mapper;
 			_userManager = userManager;
 			_roleManager = roleManager;
@@ -76,7 +74,7 @@
 
 			if (!result)
 			{
-				_logger.LogWarn($"{nameof(ValidateUser)}: Authentication failed. Wrong user name or password.");
+				Log.Warning($"{nameof(ValidateUser)}: Authentication failed. Wrong user name or password.");
 			}
 
 			return result;

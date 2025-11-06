@@ -8,12 +8,14 @@
 	using Microsoft.EntityFrameworkCore;
 	using Microsoft.IdentityModel.Tokens;
 
+	using Serilog;
+	using Serilog.Events;
+
 	using UltimateDotNetSkeleton.Application.Services.Manager;
 	using UltimateDotNetSkeleton.Domain.ConfigurationModels;
 	using UltimateDotNetSkeleton.Domain.Context;
 	using UltimateDotNetSkeleton.Domain.Models;
 	using UltimateDotNetSkeleton.Domain.Repositories.Manager;
-	using UltimateDotNetSkeleton.Infrastructure.Logger;
 
 	public static class ServiceExtensions
     {
@@ -85,9 +87,6 @@
             .AddDefaultTokenProviders();
         }
 
-		public static void ConfigureLoggerService(this IServiceCollection services) =>
-            services.AddSingleton<ILoggerManager, LoggerManager>();
-
 		public static void ConfigureRepositoryManager(this IServiceCollection services) =>
             services.AddScoped<IRepositoryManager, RepositoryManager>();
 
@@ -96,5 +95,71 @@
 
 		public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
             services.AddDbContext<RepositoryContext>(opts => opts.UseNpgsql(configuration.GetConnectionString("PostgresConnection")));
-    }
+
+		public static IServiceCollection ConfigureLogging(this IServiceCollection services, IConfiguration configuration)
+		{
+			const string AzureBlobStorageConnection = "AzureBlobStorage";
+			const string DotNetEnvironment = "ASPNETCORE_ENVIRONMENT";
+			const string DevelopmentEnvironment = "Development";
+
+			var environment = Environment.GetEnvironmentVariable(DotNetEnvironment) ?? DevelopmentEnvironment;
+
+			var loggerConfig = new LoggerConfiguration()
+				.MinimumLevel.Information()
+				.MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+				.MinimumLevel.Override("System", LogEventLevel.Warning)
+				.Enrich.FromLogContext()
+				.Enrich.WithProperty("Environment", environment)
+				.WriteTo.Console();
+
+			if (string.Equals(environment, DevelopmentEnvironment, StringComparison.OrdinalIgnoreCase))
+			{
+				loggerConfig.WriteTo.Debug(restrictedToMinimumLevel: LogEventLevel.Information);
+			}
+			else
+			{
+				var connectionString = configuration.GetConnectionString(AzureBlobStorageConnection);
+
+				if (!string.IsNullOrEmpty(connectionString))
+				{
+					loggerConfig.WriteTo.AzureBlobStorage(
+						connectionString: connectionString,
+						restrictedToMinimumLevel: LogEventLevel.Information,
+						storageContainerName: $"logs-{environment.ToLower()}",
+						storageFileName: "{yyyy}/{MM}/log.txt",
+						retainedBlobCountLimit: 2,
+						blobSizeLimitBytes: 50 * 1024 * 1024);
+				}
+				else
+				{
+					Console.WriteLine($"Warning: Azure Blob Storage connection string not found for environment '{environment}'");
+				}
+			}
+
+			var logger = loggerConfig.CreateLogger();
+			Log.Logger = logger;
+
+			services.AddLogging(loggingBuilder =>
+			{
+				loggingBuilder.AddSerilog(logger, dispose: true);
+			});
+
+			return services;
+		}
+
+		public static string AddTennoSignature()
+		{
+			var webRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+			var signaturePath = Path.Combine(
+				webRootPath,
+				"Signature",
+				"TennoSignature.txt");
+
+			var formattedTime = DateTime.Now.ToString("HH:mm:ss");
+			var file = File.ReadAllText(signaturePath)
+				.Replace("{{CURRENT_TIME}}", formattedTime);
+
+			return file;
+		}
+	}
 }

@@ -9,18 +9,15 @@
     using UltimateDotNetSkeleton.Application.Exceptions.NotFound;
     using UltimateDotNetSkeleton.Domain.Models;
     using UltimateDotNetSkeleton.Domain.Repositories.Manager;
-    using UltimateDotNetSkeleton.Infrastructure.Logger;
 
     internal sealed class CompanyService : ICompanyService
 	{
 		private readonly IRepositoryManager _repository;
-		private readonly ILoggerManager _logger;
 		private readonly IMapper _mapper;
 
-		public CompanyService(IRepositoryManager repository, ILoggerManager logger, IMapper mapper)
+		public CompanyService(IRepositoryManager repository, IMapper mapper)
 		{
 			_repository = repository;
-			_logger = logger;
 			_mapper = mapper;
 		}
 
