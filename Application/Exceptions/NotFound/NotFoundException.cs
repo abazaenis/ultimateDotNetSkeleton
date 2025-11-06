@@ -1,4 +1,4 @@
-﻿namespace UltimateDotNetSkeleton.Exceptions.NotFound
+﻿namespace UltimateDotNetSkeleton.Application.Exceptions.NotFound
 {
 	public class NotFoundException : Exception
 	{

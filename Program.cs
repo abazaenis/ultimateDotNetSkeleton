@@ -28,9 +28,11 @@ namespace UltimateDotNetSkeleton
 
 			// Service configuration
 			builder.Services.ConfigureCors();
+			builder.Services.ConfigureEmailSender();
 			builder.Services.ConfigureRepositoryManager();
 			builder.Services.ConfigureServiceManager();
 			builder.Services.ConfigureSqlContext(builder.Configuration);
+			builder.Services.ConfigureEmailConfiguration(builder.Configuration);
 			builder.Services.Configure<ApiBehaviorOptions>(options =>
 			{
 				options.SuppressModelStateInvalidFilter = true;
@@ -46,7 +48,6 @@ namespace UltimateDotNetSkeleton
 			builder.Services.AddSwaggerGen();
 			builder.Services.AddAutoMapper(typeof(Program));
 			builder.Services.AddAuthentication();
-			builder.Services.AddMemoryCache();
 			builder.Services.ConfigureRateLimitingOptions();
 			builder.Services.AddHttpContextAccessor();
 			builder.Services.ConfigureIdentity();

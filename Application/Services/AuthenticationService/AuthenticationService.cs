@@ -13,10 +13,10 @@
 
 	using Serilog;
 
+	using UltimateDotNetSkeleton.Application.ConfigurationModels;
 	using UltimateDotNetSkeleton.Application.DTOs.Token;
 	using UltimateDotNetSkeleton.Application.DTOs.User;
 	using UltimateDotNetSkeleton.Application.Exceptions.BadRequest;
-	using UltimateDotNetSkeleton.Domain.ConfigurationModels;
 	using UltimateDotNetSkeleton.Domain.Models;
 
 	public class AuthenticationService : IAuthenticationService

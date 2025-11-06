@@ -11,11 +11,14 @@
 	using Serilog;
 	using Serilog.Events;
 
+	using UltimateDotNetSkeleton.Application.ConfigurationModels;
 	using UltimateDotNetSkeleton.Application.Services.Manager;
-	using UltimateDotNetSkeleton.Domain.ConfigurationModels;
 	using UltimateDotNetSkeleton.Domain.Context;
 	using UltimateDotNetSkeleton.Domain.Models;
 	using UltimateDotNetSkeleton.Domain.Repositories.Manager;
+	using UltimateDotNetSkeleton.Infrastructure.Services.EmailSender;
+
+	using IEmailSender = UltimateDotNetSkeleton.Infrastructure.Services.EmailSender.IEmailSender;
 
 	public static class ServiceExtensions
     {
@@ -72,6 +75,9 @@
                     .WithExposedHeaders("X-Pagination"));
             });
 
+		public static void ConfigureEmailSender(this IServiceCollection services) =>
+			services.AddScoped<IEmailSender, EmailSender>();
+
 		public static void ConfigureIdentity(this IServiceCollection services)
         {
             services.AddIdentity<User, IdentityRole>(o =>
@@ -95,6 +101,13 @@
 
 		public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
             services.AddDbContext<RepositoryContext>(opts => opts.UseNpgsql(configuration.GetConnectionString("PostgresConnection")));
+
+		public static void ConfigureEmailConfiguration(this IServiceCollection services, IConfiguration configuration)
+		{
+			var emailConfig = new EmailConfiguration();
+			configuration.GetSection(EmailConfiguration.Section).Bind(emailConfig);
+			services.AddSingleton(emailConfig);
+		}
 
 		public static IServiceCollection ConfigureLogging(this IServiceCollection services, IConfiguration configuration)
 		{

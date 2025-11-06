@@ -1,6 +1,4 @@
-﻿using UltimateDotNetSkeleton.Exceptions.NotFound;
-
-namespace UltimateDotNetSkeleton.Application.Exceptions.NotFound
+﻿namespace UltimateDotNetSkeleton.Application.Exceptions.NotFound
 {
 	public class EmployeeNotFoundException : NotFoundException
 	{

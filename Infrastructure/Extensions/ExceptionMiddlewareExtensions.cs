@@ -1,16 +1,16 @@
 ﻿namespace UltimateDotNetSkeleton.Infrastructure.Extensions
 {
-    using System.Net;
+	using System.Net;
 
-    using Microsoft.AspNetCore.Diagnostics;
+	using Microsoft.AspNetCore.Diagnostics;
 
-    using Serilog;
+	using Serilog;
 
-    using UltimateDotNetSkeleton.Application.Exceptions.BadRequest;
-    using UltimateDotNetSkeleton.Exceptions.NotFound;
-    using UltimateDotNetSkeleton.Infrastructure.Exceptions;
+	using UltimateDotNetSkeleton.Application.Exceptions.BadRequest;
+	using UltimateDotNetSkeleton.Application.Exceptions.NotFound;
+	using UltimateDotNetSkeleton.Infrastructure.Exceptions;
 
-    public static class ExceptionMiddlewareExtensions
+	public static class ExceptionMiddlewareExtensions
     {
         public static void ConfigureExceptionHandler(this WebApplication app)
         {

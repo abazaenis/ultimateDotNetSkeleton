@@ -26,3 +26,6 @@ dotnet_diagnostic.IDE0290.severity = none
 
 # ASP0000: Do not call 'IServiceCollection.BuildServiceProvider' in 'ConfigureServices'
 dotnet_diagnostic.ASP0000.severity = none
+
+# SA1503: Braces should not be omitted
+dotnet_diagnostic.SA1503.severity = none

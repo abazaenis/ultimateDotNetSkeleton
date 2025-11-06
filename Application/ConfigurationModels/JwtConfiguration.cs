@@ -1,4 +1,4 @@
-﻿namespace UltimateDotNetSkeleton.Domain.ConfigurationModels
+﻿namespace UltimateDotNetSkeleton.Application.ConfigurationModels
 {
 	public class JwtConfiguration
 	{
@@ -9,6 +9,8 @@
 		public string? ValidAudience { get; set; }
 
 		public int Expires { get; set; }
+
+		public int RefreshTokenExpirationDays { get; set; }
 
 		public string? SecretKey { get; set; }
 	}
