@@ -7,7 +7,7 @@ using NpgsqlTypes;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace UltimateDotNetSkeleton.Migrations
+namespace ultimateDotNetSkeleton.Migrations
 {
     /// <inheritdoc />
     public partial class MigrateDb : Migration
@@ -205,8 +205,8 @@ namespace UltimateDotNetSkeleton.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "ace167d5-0024-4974-8667-19732c32b1d6", null, "Manager", "MANAGER" },
-                    { "ae3fcda1-913c-4940-952b-e800c2465ad1", null, "Administrator", "ADMINISTRATOR" }
+                    { "2184b56c-169e-4f7e-8d60-0ebcfdb25579", null, "Manager", "MANAGER" },
+                    { "46caac51-01da-4560-9d6f-e5f95e28767a", null, "Administrator", "ADMINISTRATOR" }
                 });
 
             migrationBuilder.CreateIndex(

@@ -9,7 +9,7 @@ using UltimateDotNetSkeleton.Domain.Context;
 
 #nullable disable
 
-namespace UltimateDotNetSkeleton.Migrations
+namespace ultimateDotNetSkeleton.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
     partial class RepositoryContextModelSnapshot : ModelSnapshot
@@ -51,13 +51,13 @@ namespace UltimateDotNetSkeleton.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ace167d5-0024-4974-8667-19732c32b1d6",
+                            Id = "2184b56c-169e-4f7e-8d60-0ebcfdb25579",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "ae3fcda1-913c-4940-952b-e800c2465ad1",
+                            Id = "46caac51-01da-4560-9d6f-e5f95e28767a",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });

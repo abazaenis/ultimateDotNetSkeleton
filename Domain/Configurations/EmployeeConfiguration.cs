@@ -17,8 +17,7 @@
                 .HasColumnType("tsvector")
                 .HasComputedColumnSql(
                     @"to_tsvector('english', coalesce(""Name"", '') || ' ' || coalesce(""Position"", ''))",
-                    stored: true
-                );
+                    stored: true);
 
             builder
                 .HasIndex("SearchVector")
