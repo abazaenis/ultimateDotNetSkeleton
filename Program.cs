@@ -1,12 +1,8 @@
 namespace UltimateDotNetSkeleton
 {
 	using Microsoft.AspNetCore.HttpOverrides;
-	using Microsoft.AspNetCore.Mvc;
-	using Microsoft.AspNetCore.Mvc.Formatters;
-	using Microsoft.Extensions.Options;
-
+	using Microsoft.Extensions.DependencyInjection;
 	using Serilog;
-
 	using UltimateDotNetSkeleton.Infrastructure.Extensions;
 	using UltimateDotNetSkeleton.Presentation.ActionFilters;
 
@@ -20,40 +16,28 @@ namespace UltimateDotNetSkeleton
 			builder.Services.ConfigureLogging(builder.Configuration);
 			builder.Host.UseSerilog();
 
-			NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter() =>
-				new ServiceCollection().AddLogging().AddMvc().AddNewtonsoftJson()
-				.Services.BuildServiceProvider()
-				.GetRequiredService<IOptions<MvcOptions>>()
-				.Value.InputFormatters.OfType<NewtonsoftJsonPatchInputFormatter>().First();
-
 			// Service configuration
 			builder.Services.ConfigureCors();
 			builder.Services.ConfigureEmailSender();
+			builder.Services.ConfigureBlobStorageHandler();
 			builder.Services.ConfigureRepositoryManager();
 			builder.Services.ConfigureServiceManager();
 			builder.Services.ConfigureSqlContext(builder.Configuration);
 			builder.Services.ConfigureEmailConfiguration(builder.Configuration);
-			builder.Services.Configure<ApiBehaviorOptions>(options =>
-			{
-				options.SuppressModelStateInvalidFilter = true;
-			});
+			builder.Services.ConfigureApiBehaviorOptions();
 			builder.Services.AddScoped<ValidationFilterAttribute>();
-			builder.Services.AddControllers(config =>
-			{
-				config.RespectBrowserAcceptHeader = true;
-				config.ReturnHttpNotAcceptable = true;
-				config.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
-			}).AddXmlDataContractSerializerFormatters();
+			builder.Services.ConfigureControllers();
 			builder.Services.AddEndpointsApiExplorer();
-			builder.Services.AddSwaggerGen();
-			builder.Services.AddAutoMapper(typeof(Program));
+			builder.Services.ConfigureSwagger();
+			builder.Services.ConfigureAutoMapper(builder.Configuration);
+
 			builder.Services.AddAuthentication();
 			builder.Services.ConfigureRateLimitingOptions();
 			builder.Services.AddHttpContextAccessor();
-			builder.Services.ConfigureIdentity();
 			builder.Services.ConfigureJWT(builder.Configuration);
 
 			var app = builder.Build();
+			app.MapGet("/", async context => await context.Response.WriteAsync(ServiceExtensions.AddTennoSignature()));
 
 			app.ConfigureExceptionHandler();
 
@@ -65,7 +49,6 @@ namespace UltimateDotNetSkeleton
 			}
 			else
 			{
-				app.UseHsts();
 				app.UseHsts();
 			}
 

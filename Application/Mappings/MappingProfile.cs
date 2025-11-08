@@ -10,22 +10,35 @@
 	{
         public MappingProfile()
         {
-            CreateMap<Company, CompanyDto>()
-                .ForMember(
-                    company => company.FullAddress,
-                    opt => opt.MapFrom(x => string.Join(' ', x.Address, x.Country)));
+			CreateEmployeeMappings();
+			CreateCompanyMappings();
+			CreateUserMappings();
+		}
 
-            CreateMap<Employee, EmployeeDto>();
+        public void CreateEmployeeMappings()
+        {
+			CreateMap<Employee, EmployeeDto>();
 
-            CreateMap<CompanyForCreationDto, Company>();
+			CreateMap<EmployeeForCreationDto, Employee>();
 
-            CreateMap<EmployeeForCreationDto, Employee>();
+			CreateMap<EmployeeForUpdateDto, Employee>().ReverseMap();
+		}
 
-            CreateMap<EmployeeForUpdateDto, Employee>().ReverseMap();
+        public void CreateCompanyMappings()
+        {
+			CreateMap<Company, CompanyDto>()
+				.ForMember(
+					company => company.FullAddress,
+					opt => opt.MapFrom(x => string.Join(' ', x.Address, x.Country)));
 
-            CreateMap<CompanyForUpdateDto, Company>();
+			CreateMap<CompanyForCreationDto, Company>();
 
+			CreateMap<CompanyForUpdateDto, Company>();
+		}
+
+        public void CreateUserMappings()
+		{
             CreateMap<UserForRegistrationDto, User>();
 		}
-    }
+	}
 }

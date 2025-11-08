@@ -29,3 +29,6 @@ dotnet_diagnostic.ASP0000.severity = none
 
 # SA1503: Braces should not be omitted
 dotnet_diagnostic.SA1503.severity = none
+
+# IDE0320: Make anonymous function static
+dotnet_diagnostic.IDE0320.severity = none
