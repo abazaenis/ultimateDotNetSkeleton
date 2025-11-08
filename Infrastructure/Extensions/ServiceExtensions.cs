@@ -101,7 +101,10 @@
 			services.AddScoped<IServiceManager, ServiceManager>();
 
 		public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
-			services.AddDbContext<RepositoryContext>(opts => opts.UseNpgsql(configuration.GetConnectionString("PostgresConnection")));
+			services.AddDbContext<RepositoryContext>(options =>
+				options.UseNpgsql(
+					configuration.GetConnectionString("PostgresConnection"),
+					x => x.MigrationsAssembly(typeof(RepositoryContext).Assembly.GetName().Name)));
 
 		public static void ConfigureEmailConfiguration(this IServiceCollection services, IConfiguration configuration)
 		{

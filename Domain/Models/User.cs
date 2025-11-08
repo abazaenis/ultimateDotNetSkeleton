@@ -35,7 +35,7 @@
 
 		public bool IsDeleted { get; set; }
 
-		public DateTime DeletedAt { get; set; }
+		public DateTime? DeletedAt { get; set; }
 
 		[InverseProperty("User")]
 		public ICollection<RefreshToken> RefreshTokens { get; set; } = [];
