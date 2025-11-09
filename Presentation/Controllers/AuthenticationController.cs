@@ -11,7 +11,7 @@
 	using UltimateDotNetSkeleton.Infrastructure.Extensions;
 	using UltimateDotNetSkeleton.Presentation.ActionFilters;
 
-	[Route("api/[controller]")]
+	[Route("api/authentication")]
 	[ApiController]
 	public class AuthenticationController : ControllerBase
 	{

@@ -5,7 +5,9 @@
 	using UltimateDotNetSkeleton.Application.DTOs.Authentication;
 	using UltimateDotNetSkeleton.Application.DTOs.Company;
 	using UltimateDotNetSkeleton.Application.DTOs.Employee;
+	using UltimateDotNetSkeleton.Domain.Enums;
 	using UltimateDotNetSkeleton.Domain.Models;
+	using UltimateDotNetSkeleton.Infrastructure.Services.DateTimeHelper;
 
 	public class MappingProfile : Profile
 	{
@@ -39,7 +41,22 @@
 
         public void CreateUserMappings()
 		{
-            CreateMap<UserForRegistrationDto, User>();
+			CreateMap<BaseUserForRegistrationDto, User>();
+
+			CreateMap<UserForRegistrationDto, User>()
+				.IncludeBase<BaseUserForRegistrationDto, User>()
+				.ForMember(dest => dest.RegistrationType, opt => opt.MapFrom(_ => RegistrationType.Native))
+				.ForMember(dest => dest.RegistrationDate, opt => opt.MapFrom(_ => DateTimeHelper.GetUnspecifiedUtcNow()));
+
+			CreateMap<AppleUserForRegistrationDto, User>()
+				.IncludeBase<BaseUserForRegistrationDto, User>()
+				.ForMember(dest => dest.ThirdPartyId, opt => opt.MapFrom(src => src.AppleId))
+				.ForMember(dest => dest.RegistrationType, opt => opt.MapFrom(_ => RegistrationType.Apple));
+
+			CreateMap<GoogleUserForRegistrationDto, User>()
+				.IncludeBase<BaseUserForRegistrationDto, User>()
+				.ForMember(dest => dest.ThirdPartyId, opt => opt.MapFrom(src => src.GoogleId))
+				.ForMember(dest => dest.RegistrationType, opt => opt.MapFrom(_ => RegistrationType.Google));
 		}
 	}
 }

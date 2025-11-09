@@ -1,11 +1,12 @@
 ﻿namespace UltimateDotNetSkeleton.Application.Services.AuthenticationService
 {
+	using System;
 	using System.IdentityModel.Tokens.Jwt;
 	using System.Net.Mail;
 	using System.Security.Claims;
 	using System.Security.Cryptography;
 	using System.Text;
-	using System.Text.Json;
+
 	using AutoMapper;
 	using Microsoft.EntityFrameworkCore;
 	using Microsoft.IdentityModel.Tokens;
@@ -103,13 +104,9 @@
 
 		public async Task RegisterAsync(UserForRegistrationDto userForRegistration)
 		{
-			ValidateUserRegistrationRequest(userForRegistration);
-
 			await CheckUserExistence(userForRegistration.Email!, userForRegistration.PhoneNumber!);
 
 			var user = _mapper.Map<User>(userForRegistration);
-			user.RegistrationType = RegistrationType.Native;
-			user.RegistrationDate = DateTime.UtcNow;
 
 			(user.PasswordHash, user.PasswordSalt) = CreateHash(userForRegistration.Password!);
 
@@ -120,13 +117,9 @@
 
 		public async Task<TokenDto> GoogleRegisterAsync(GoogleUserForRegistrationDto googleUserForRegistration)
 		{
-			ValidateUserRegistrationRequest(googleUserForRegistration);
-
 			await CheckUserExistence(googleUserForRegistration.Email!, googleUserForRegistration.PhoneNumber!);
 
 			var user = _mapper.Map<User>(googleUserForRegistration);
-			user.RegistrationType = RegistrationType.Google;
-			user.RegistrationDate = DateTime.UtcNow;
 
 			_repository.User.CreateUser(user);
 			await _repository.SaveAsync();
@@ -141,13 +134,9 @@
 
 		public async Task<TokenDto> AppleRegisterAsync(AppleUserForRegistrationDto appleUserForRegistration)
 		{
-			ValidateUserRegistrationRequest(appleUserForRegistration);
-
 			await CheckUserExistence(appleUserForRegistration.Email!, appleUserForRegistration.PhoneNumber!);
 
 			var user = _mapper.Map<User>(appleUserForRegistration);
-			user.RegistrationType = RegistrationType.Apple;
-			user.RegistrationDate = DateTime.UtcNow;
 
 			_repository.User.CreateUser(user);
 			await _repository.SaveAsync();
@@ -223,7 +212,7 @@
 			var tempPassword = GeneratePassword();
 
 			(user.TempPasswordHash, user.TempPasswordSalt) = CreateHash(tempPassword);
-			user.TempPasswordExpiry = DateTime.SpecifyKind(DateTime.UtcNow.AddHours(1), DateTimeKind.Unspecified);
+			user.TempPasswordExpiry = DateTimeHelper.GetUnspecifiedUtcNow().AddHours(1);
 
 			await _repository.SaveAsync();
 
@@ -241,9 +230,7 @@
 				includes: u => u.Include(u => u.RefreshTokens))
 				?? throw new UserNotFoundException();
 
-			var currentUtc = DateTimeHelper.GetUnspecifiedUtcNow();
-
-			if (user.TempPasswordExpiry == null || user.TempPasswordExpiry < currentUtc)
+			if (user.TempPasswordExpiry == null || user.TempPasswordExpiry < DateTimeHelper.GetUnspecifiedUtcNow())
 				throw new InvalidTemporaryPasswordBadRequestException("Privremena šifra je istekla. Molimo vas da zatražite novu lozinku.");
 
 			if (!VerifyHash(passwordDto.TemporaryPassword!, user.TempPasswordHash!, user.TempPasswordSalt!))
@@ -306,11 +293,6 @@
 		{
 			const string validChars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789";
 			return RandomNumberGenerator.GetString(validChars, 8);
-		}
-
-		private static void ValidateUserRegistrationRequest(dynamic userForRegistration)
-		{
-			// TODO: Implement this method
 		}
 
 		private string GenerateAccessToken(User user)

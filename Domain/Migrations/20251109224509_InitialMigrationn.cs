@@ -1,13 +1,13 @@
-﻿#nullable disable
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+using NpgsqlTypes;
+
+#nullable disable
 
 namespace UltimateDotNetSkeleton.Domain.Migrations
 {
-    using System;
-    using Microsoft.EntityFrameworkCore.Migrations;
-    using NpgsqlTypes;
-
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class InitialMigrationn : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,9 +17,9 @@ namespace UltimateDotNetSkeleton.Domain.Migrations
                 columns: table => new
                 {
                     CompanyId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: false),
                     Address = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: false),
-                    Country = table.Column<string>(type: "text", nullable: true),
+                    Country = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -31,21 +31,21 @@ namespace UltimateDotNetSkeleton.Domain.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    FirstName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    LastName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    PhoneNumber = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
-                    Email = table.Column<string>(type: "character varying(254)", maxLength: 254, nullable: false),
-                    EmailNotifications = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true),
+                    FirstName = table.Column<string>(type: "text", nullable: false),
+                    LastName = table.Column<string>(type: "text", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "text", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false),
+                    EmailNotifications = table.Column<bool>(type: "boolean", nullable: false),
                     PasswordHash = table.Column<string>(type: "text", nullable: true),
                     PasswordSalt = table.Column<string>(type: "text", nullable: true),
-                    ThirdPartyId = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    ThirdPartyId = table.Column<string>(type: "text", nullable: true),
                     TempPasswordHash = table.Column<string>(type: "text", nullable: true),
                     TempPasswordSalt = table.Column<string>(type: "text", nullable: true),
                     TempPasswordExpiry = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
-                    RegistrationType = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    RegistrationType = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
                     RegistrationDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
-                    DeletedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -61,7 +61,7 @@ namespace UltimateDotNetSkeleton.Domain.Migrations
                     Age = table.Column<int>(type: "integer", nullable: false),
                     Position = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
                     CompanyId = table.Column<Guid>(type: "uuid", nullable: false),
-                    SearchVector = table.Column<NpgsqlTsVector>(type: "tsvector", nullable: true, computedColumnSql: "to_tsvector('english', coalesce(\"Name\", '') || ' ' || coalesce(\"Position\", ''))", stored: true),
+                    SearchVector = table.Column<NpgsqlTsVector>(type: "tsvector", nullable: true, computedColumnSql: "to_tsvector('english', coalesce(\"Name\", '') || ' ' || coalesce(\"Position\", ''))", stored: true)
                 },
                 constraints: table =>
                 {
@@ -79,10 +79,10 @@ namespace UltimateDotNetSkeleton.Domain.Migrations
                 columns: table => new
                 {
                     RefreshTokenId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Token = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
+                    Token = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     ExpirationDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    DeviceId = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    DeviceId = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {

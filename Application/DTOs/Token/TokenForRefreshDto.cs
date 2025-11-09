@@ -4,13 +4,13 @@
 
 	public record TokenForRefreshDto
 	{
-		[Required(ErrorMessage = "Access token is required")]
-		public string? AccessToken { get; set; }
+		[Required]
+		public string AccessToken { get; set; } = string.Empty;
 
-		[Required(ErrorMessage = "Refresh token is required")]
-		public string? RefreshToken { get; set; }
+		[Required]
+		public string? RefreshToken { get; set; } = string.Empty;
 
-		[Required(ErrorMessage = "Device ID is required")]
-		public string? DeviceId { get; set; }
+		[Required]
+		public string? DeviceId { get; set; } = string.Empty;
 	}
 }

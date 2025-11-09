@@ -2,12 +2,15 @@
 {
 	using System.ComponentModel.DataAnnotations;
 
-	public record GoogleUserForRegistrationDto : BaseUserForRegistrationDto
+	public abstract record BaseUserForAuthenticationDto
 	{
 		[Required]
-		public string GoogleId { get; init; } = string.Empty;
+		[EmailAddress]
+		[MaxLength(50)]
+		public string Email { get; init; } = string.Empty;
 
 		[Required]
+		[MaxLength(255)]
 		public string DeviceId { get; init; } = string.Empty;
 	}
 }

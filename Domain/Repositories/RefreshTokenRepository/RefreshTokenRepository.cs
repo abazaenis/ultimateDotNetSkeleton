@@ -12,9 +12,9 @@
 		{
 		}
 
-		public void CreateRefreshToken(RefreshToken token) => Create(token);
-
 		public async Task<RefreshToken?> GetRefreshTokenAsync(Guid userId, string deviceId, bool trackChanges) =>
-			await FindByCondition(t => t.UserId.Equals(userId) && t.DeviceId!.Equals(deviceId), trackChanges).FirstOrDefaultAsync();
+			await FindByCondition(t => t.UserId.Equals(userId) && t.DeviceId.Equals(deviceId), trackChanges).FirstOrDefaultAsync();
+
+		public void CreateRefreshToken(RefreshToken token) => Create(token);
 	}
 }

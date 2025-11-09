@@ -2,15 +2,10 @@
 {
 	using System.ComponentModel.DataAnnotations;
 
-	public record GoogleUserForAuthenticationDto
+	public record GoogleUserForAuthenticationDto : BaseUserForAuthenticationDto
 	{
-		[Required(ErrorMessage = "Email is required")]
-		public string? Email { get; init; }
-
-		[Required(ErrorMessage = "Google ID is required")]
-		public string? GoogleId { get; init; }
-
-		[Required(ErrorMessage = "Device ID is required")]
-		public string? DeviceId { get; init; }
+		[Required]
+		[MaxLength(255)]
+		public string GoogleId { get; init; } = string.Empty;
 	}
 }

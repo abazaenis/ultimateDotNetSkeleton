@@ -2,15 +2,10 @@
 {
 	using System.ComponentModel.DataAnnotations;
 
-	public record AppleUserForAuthenticationDto
+	public record AppleUserForAuthenticationDto : BaseUserForAuthenticationDto
 	{
-		[Required(ErrorMessage = "Email is required")]
-		public string? Email { get; init; }
-
-		[Required(ErrorMessage = "Apple ID is required")]
-		public string? AppleId { get; init; }
-
-		[Required(ErrorMessage = "Device ID is required")]
-		public string? DeviceId { get; init; }
+		[Required]
+		[MaxLength(255)]
+		public string AppleId { get; init; } = string.Empty;
 	}
 }
