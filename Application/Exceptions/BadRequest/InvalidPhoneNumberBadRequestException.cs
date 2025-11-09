@@ -1,6 +1,6 @@
 ﻿namespace UltimateDotNetSkeleton.Application.Exceptions.BadRequest
 {
-	public class InvalidPhoneNumberBadRequestException : BadRequestException
+	public sealed class InvalidPhoneNumberBadRequestException : BadRequestException
 	{
 		public InvalidPhoneNumberBadRequestException(string message)
 			: base(message)

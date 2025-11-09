@@ -58,6 +58,12 @@
 			}
 		}
 
+		public async Task SendTemporaryPasswordAsync(string recipient, string temporaryPassword)
+		{
+			// TODO: Implement this method.
+			throw new NotImplementedException("This method has not yet been implemented.");
+		}
+
 		private static void LogEmailSendingFailure(string recipient, RestResponse response, [CallerMemberName] string methodName = "")
 		{
 			Log.Error(

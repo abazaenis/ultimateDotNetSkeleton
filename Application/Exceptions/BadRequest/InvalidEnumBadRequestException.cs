@@ -1,6 +1,6 @@
 ﻿namespace UltimateDotNetSkeleton.Application.Exceptions.BadRequest
 {
-	public class InvalidEnumBadRequestException : BadRequestException
+	public sealed class InvalidEnumBadRequestException : BadRequestException
 	{
 		public InvalidEnumBadRequestException(string message)
 			: base(message)

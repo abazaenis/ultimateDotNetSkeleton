@@ -1,12 +1,13 @@
 ﻿namespace UltimateDotNetSkeleton.Application.Mappings
 {
-    using AutoMapper;
-    using UltimateDotNetSkeleton.Application.DTOs.Company;
-    using UltimateDotNetSkeleton.Application.DTOs.Employee;
-    using UltimateDotNetSkeleton.Application.DTOs.User;
-    using UltimateDotNetSkeleton.Domain.Models;
+	using AutoMapper;
 
-    public class MappingProfile : Profile
+	using UltimateDotNetSkeleton.Application.DTOs.Authentication;
+	using UltimateDotNetSkeleton.Application.DTOs.Company;
+	using UltimateDotNetSkeleton.Application.DTOs.Employee;
+	using UltimateDotNetSkeleton.Domain.Models;
+
+	public class MappingProfile : Profile
 	{
         public MappingProfile()
         {

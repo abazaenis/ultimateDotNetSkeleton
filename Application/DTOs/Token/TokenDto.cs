@@ -2,14 +2,8 @@
 {
 	public record TokenDto
 	{
-		public TokenDto(string accessToken, string refreshToken)
-		{
-			AccessToken = accessToken;
-			RefreshToken = refreshToken;
-		}
+		public string AccessToken { get; set; } = string.Empty;
 
-		public string AccessToken { get; set; }
-
-		public string RefreshToken { get; set; }
+		public string RefreshToken { get; set; } = string.Empty;
 	}
 }

@@ -1,4 +1,4 @@
-﻿namespace UltimateDotNetSkeleton.Application.DTOs.User
+﻿namespace UltimateDotNetSkeleton.Application.DTOs.Authentication
 {
     using System.ComponentModel.DataAnnotations;
 
@@ -17,7 +17,5 @@
         public string? Email { get; init; }
 
         public string? PhoneNumber { get; init; }
-
-        public ICollection<string>? Roles { get; init; }
     }
 }
