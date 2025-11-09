@@ -317,12 +317,12 @@
 		{
 			var claims = new List<Claim>
 			{
-				new ("UserId", Convert.ToString(user.Id)!),
-				new ("Email", user.Email ?? string.Empty),
-				new ("FirstName", user.FirstName ?? string.Empty),
-				new ("LastName", user.LastName ?? string.Empty),
-				new ("PhoneNumber", user.PhoneNumber ?? string.Empty),
-				new ("RegistrationType", Convert.ToString(user.RegistrationType)!),
+				new("UserId", Convert.ToString(user.Id)!),
+				new("Email", user.Email ?? string.Empty),
+				new("FirstName", user.FirstName ?? string.Empty),
+				new("LastName", user.LastName ?? string.Empty),
+				new("PhoneNumber", user.PhoneNumber ?? string.Empty),
+				new("RegistrationType", Convert.ToString(user.RegistrationType)!),
 			};
 
 			var appSettingsToken = _jwtConfiguration.SecretKey;

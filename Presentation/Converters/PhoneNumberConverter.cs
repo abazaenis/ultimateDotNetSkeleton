@@ -10,7 +10,7 @@
 	{
 		private const string BosnianCountryCode = "387";
 		private const string BosnianCountryCodePrefix = "+387";
-		private static readonly Dictionary<string, int> PrefixLengths = new ()
+		private static readonly Dictionary<string, int> PrefixLengths = new()
 		{
 			{ "60", 9 },
 			{ "61", 8 },

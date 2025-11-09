@@ -112,12 +112,8 @@
 
 		private async Task<Employee> GetEmployeeForCompanyAndCheckIfItExists(Guid companyId, Guid id, bool trackChanges)
 		{
-			var employee = await _repository.Employee.GetEmployeeAsync(companyId, id, trackChanges);
-
-			if (employee is null)
-			{
-				throw new EmployeeNotFoundException(id);
-			}
+			var employee = await _repository.Employee.GetEmployeeAsync(companyId, id, trackChanges)
+				?? throw new EmployeeNotFoundException(id);
 
 			return employee;
 		}

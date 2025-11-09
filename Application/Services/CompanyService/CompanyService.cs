@@ -112,12 +112,8 @@
 
 		private async Task<Company> GetCompanyAndCheckIfItExists(Guid companyId, bool trackChanges)
 		{
-			var company = await _repository.Company.GetCompanyAsync(companyId, trackChanges);
-
-			if (company is null)
-			{
-				throw new CompanyNotFoundException(companyId);
-			}
+			var company = await _repository.Company.GetCompanyAsync(companyId, trackChanges)
+				?? throw new CompanyNotFoundException(companyId);
 
 			return company;
 		}

@@ -10,6 +10,6 @@
 
         public required string Country { get; set; }
 
-        public IEnumerable<EmployeeForCreationDto> Employees { get; set; }
+        public IEnumerable<EmployeeForCreationDto> Employees { get; set; } = [];
     }
 }
