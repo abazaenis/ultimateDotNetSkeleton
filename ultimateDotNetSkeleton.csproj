@@ -46,12 +46,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.4" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.9" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Application\Validators\" />
   </ItemGroup>
 
 </Project>
