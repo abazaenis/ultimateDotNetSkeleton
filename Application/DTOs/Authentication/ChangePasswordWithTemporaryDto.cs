@@ -4,15 +4,15 @@
 
 	public record ChangePasswordWithTemporaryDto
 	{
-		[Required(ErrorMessage = "Email is required")]
-		[EmailAddress(ErrorMessage = "Invalid email format")]
-		public string? Email { get; set; }
+		[Required]
+		[EmailAddress]
+		public string Email { get; set; } = string.Empty;
 
-		[Required(ErrorMessage = "Temporary password is required")]
-		public string? TemporaryPassword { get; set; }
+		[Required]
+		public string TemporaryPassword { get; set; } = string.Empty;
 
-		[Required(ErrorMessage = "New password is required")]
-		[MinLength(8, ErrorMessage = "Password must be at least 8 characters")]
-		public string? NewPassword { get; set; }
+		[Required]
+		[MinLength(8)]
+		public string NewPassword { get; set; } = string.Empty;
 	}
 }

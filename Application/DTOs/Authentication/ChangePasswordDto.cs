@@ -4,11 +4,11 @@
 
 	public record ChangePasswordDto
 	{
-		[Required(ErrorMessage = "Old password is required.")]
-		public string? Password { get; set; }
+		[Required]
+		public string Password { get; set; } = string.Empty;
 
-		[Required(ErrorMessage = "New password is required.")]
-		[MinLength(8, ErrorMessage = "New password must be at least 8 characters.")]
-		public string? NewPassword { get; set; }
+		[Required]
+		[Length(8, 50)]
+		public string NewPassword { get; set; } = string.Empty;
 	}
 }

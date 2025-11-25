@@ -35,6 +35,7 @@ namespace UltimateDotNetSkeleton
 			builder.Services.ConfigureRateLimitingOptions();
 			builder.Services.AddHttpContextAccessor();
 			builder.Services.ConfigureJWT(builder.Configuration);
+			builder.Services.ConfigureCompression();
 
 			var app = builder.Build();
 			app.MapGet("/", async context => await context.Response.WriteAsync(ServiceExtensions.AddTennoSignature()));

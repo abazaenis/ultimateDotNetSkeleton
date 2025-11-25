@@ -60,8 +60,32 @@
 
 		public async Task SendTemporaryPasswordAsync(string recipient, string temporaryPassword)
 		{
-			// TODO: Implement this method.
-			throw new NotImplementedException("This method has not yet been implemented.");
+			ValidateEmailConfig();
+
+			var client = new RestClient(_emailConfig.Url!);
+			var request = new RestRequest(string.Empty, Method.Post);
+
+			AddRequestHeaders(request);
+
+			var variables = new Dictionary<string, string>
+			{
+				{ "VALIDATION_CODE", temporaryPassword.ToString() },
+				{ "CURRENT_YEAR", DateTime.UtcNow.Year.ToString() },
+				{ "UNIQUE", Guid.NewGuid().ToString() },
+			};
+
+			var requestBody = BuildRequestBody(recipient, variables, _emailConfig.VerificationTemplateId!);
+
+			request.AddStringBody(requestBody, ContentType.Json);
+
+			var response = await client.ExecuteAsync(request);
+
+			if (!response.IsSuccessful)
+			{
+				LogEmailSendingFailure(recipient, response);
+
+				throw new EmailServiceUnavailableException();
+			}
 		}
 
 		private static void LogEmailSendingFailure(string recipient, RestResponse response, [CallerMemberName] string methodName = "")
